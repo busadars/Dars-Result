@@ -3,276 +3,300 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bayanul Uloom Suffa Dars - Examination Portal</title>
+    <title>Examination Portal | Bayanul Uloom Suffa Dars</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Poppins:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap');
 
         :root {
-            --primary-green: #0b6b3a;
+            --primary: #0b6b3a;
             --primary-dark: #064425;
-            --gold-accent: #c5a059;
-            --bg-light: #f4f8f6;
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
-            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --accent: #d4af37;
+            --bg: #f4f7f5;
+            --text: #1e293b;
+            --border: #e2e8f0;
+            --header-h: 220px;
+            --logo-s: 100px;
         }
+
+        body.is-scrolled {
+            --header-h: 70px;
+            --logo-s: 45px;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--bg-light);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
             margin: 0;
-            padding: 0;
-            color: var(--text-dark);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            color: var(--text);
+            line-height: 1.5;
+            padding-top: var(--header-h); /* Prevent content jump */
         }
 
-        /* --- HEADER --- */
+        /* --- ATTRACTIVE GLIDE HEADER --- */
         header {
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-dark) 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 50px 20px;
-            text-align: center;
-            border-bottom: 4px solid var(--gold-accent);
-            box-shadow: 0 10px 30px rgba(11, 107, 58, 0.15);
-            transition: all var(--transition-smooth);
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-h);
             z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s;
+            overflow: hidden;
+            border-bottom: 4px solid var(--accent);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        /* Background Pattern */
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("https://www.transparenttextures.com/patterns/islamic-art.png");
+            opacity: 0.1;
+            pointer-events: none;
         }
 
         .header-content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
             gap: 15px;
-            transition: inherit;
-        }
-
-        .logo-container img {
-            width: clamp(80px, 20vw, 110px);
-            height: auto;
-            border-radius: 50%;
-            border: 3px solid white;
-            background: white;
-            transition: inherit;
-        }
-
-        header h1 {
-            font-family: 'Playfair Display', serif;
-            margin: 0;
-            font-size: clamp(1.6rem, 5vw, 2.8rem);
-            font-weight: 900;
-            line-height: 1.1;
-        }
-
-        header .location {
-            font-size: clamp(0.85rem, 2.5vw, 1.1rem);
-            opacity: 0.9;
-            margin-top: 5px;
-            font-weight: 300;
-            letter-spacing: 1px;
-        }
-
-        /* --- GLIDE STATE --- */
-        body.is-scrolled header {
-            padding: 10px 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: 1200px;
+            width: 100%;
         }
 
         body.is-scrolled .header-content {
             flex-direction: row;
-            justify-content: center;
-            gap: 12px;
+            padding: 0 20px;
+            justify-content: flex-start;
+            gap: 20px;
         }
 
-        body.is-scrolled .logo-container img {
-            width: 42px;
-            height: 42px;
-        }
-
-        body.is-scrolled .header-text {
-            text-align: left;
+        .logo-box {
+            width: var(--logo-s);
+            height: var(--logo-s);
+            background: white;
+            border-radius: 50%;
+            padding: 4px;
+            border: 2px solid var(--accent);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
         }
 
-        body.is-scrolled header h1 {
-            font-size: 1.2rem;
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
-        body.is-scrolled header .location {
-            font-size: 0.8rem;
-            margin-top: 0;
-            border-left: 1px solid rgba(255,255,255,0.4);
-            padding-left: 10px;
+        .header-text { text-align: center; transition: all 0.4s; }
+        body.is-scrolled .header-text { text-align: left; }
+
+        .header-text h1 {
+            font-family: 'Playfair Display', serif;
+            margin: 0;
+            font-size: clamp(1.2rem, 5vw, 2.2rem);
+            font-weight: 900;
+            letter-spacing: -0.5px;
         }
 
-        /* --- DASHBOARD --- */
-        .dashboard {
-            display: flex;
-            flex-direction: column;
-            max-width: 1200px;
+        body.is-scrolled .header-text h1 { font-size: 1.3rem; }
+
+        .header-text p {
+            margin: 0;
+            font-size: clamp(0.7rem, 2.5vw, 1rem);
+            opacity: 0.9;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        body.is-scrolled .header-text p { font-size: 0.75rem; }
+
+        /* --- MAIN LAYOUT --- */
+        .wrapper {
+            max-width: 1100px;
             margin: 30px auto;
-            gap: 25px;
-            padding: 0 20px;
-            min-height: 60vh;
+            padding: 0 15px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
         }
 
-        @media (min-width: 900px) {
-            .dashboard { flex-direction: row; align-items: flex-start; }
-            .sidebar { width: 340px; position: sticky; top: 100px; }
-            .content-area { flex: 1; }
+        @media (min-width: 850px) {
+            .wrapper { grid-template-columns: 340px 1fr; align-items: start; }
+            .sidebar { position: sticky; top: 100px; }
         }
 
         .card {
             background: white;
-            padding: 25px;
             border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            border: 1px solid rgba(0,0,0,0.05);
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
         }
 
+        .input-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; }
         input {
             width: 100%;
-            padding: 16px;
-            border: 2px solid #e2e8f0;
+            padding: 15px;
+            border: 2px solid var(--border);
             border-radius: 12px;
-            font-size: 16px;
-            font-family: inherit;
-            box-sizing: border-box;
+            font-size: 1rem;
+            margin-bottom: 15px;
             outline: none;
+            transition: 0.2s;
             text-align: center;
-            transition: 0.3s;
         }
+        input:focus { border-color: var(--primary); background: #fdfdfd; }
 
-        input:focus { border-color: var(--primary-green); background: #fdfdfd; }
-
-        .search-btn {
+        .btn {
             width: 100%;
-            background: var(--primary-green);
+            padding: 15px;
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 16px;
             border-radius: 12px;
-            margin-top: 12px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.2s;
         }
+        .btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+        .btn-print { background: #334155; margin-top: 25px; }
 
-        /* --- RESULT TABLE --- */
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        td { padding: 14px; border-bottom: 1px solid #f1f5f9; }
-        .val { text-align: right; font-weight: 700; color: var(--primary-green); }
-        .total-row { background: #f8faf9; font-weight: 800; border-top: 2px solid var(--gold-accent); }
+        /* --- RESULTS --- */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        td, th { padding: 15px; border-bottom: 1px solid #f1f5f9; }
+        .val { text-align: right; font-weight: 700; color: var(--primary); }
+        .total-row { background: #f8fafc; font-weight: 800; border-top: 2px solid var(--accent); }
 
         /* --- FOOTER --- */
         footer {
-            background: #ffffff;
-            border-top: 1px solid #e2e8f0;
-            padding: 40px 20px;
-            margin-top: 50px;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
+            background: white;
+            padding: 60px 20px;
+            margin-top: 60px;
+            border-top: 1px solid var(--border);
+            color: #64748b;
         }
 
-        .footer-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            text-align: center;
-        }
+        .footer-content { max-width: 900px; margin: 0 auto; text-align: center; }
+        .footer-desc { font-size: 0.95rem; line-height: 1.8; margin-bottom: 25px; }
 
-        /* --- PRINT PDF (Fixed Spacing & Single Page) --- */
-        .pdf-container { display: none; }
+        /* --- PRINT (LETTER SIZE) --- */
+        .print-only { display: none; }
 
         @media print {
-            header, .sidebar, .btn-print, #loader, footer, .screen-only {
-                display: none !important;
-            }
-
-            body, html { margin: 0; padding: 0; background: white; height: 100%; }
-            
-            .pdf-container {
-                display: flex !important;
-                flex-direction: column;
-                justify-content: space-between;
-                height: 94vh; /* Leaves tiny margin for printers */
-                border: 6px double var(--primary-green);
+            @page { size: letter portrait; margin: 0.4in; }
+            body * { visibility: hidden; }
+            .print-only, .print-only * { visibility: visible; }
+            .print-only {
+                display: block !important;
+                position: absolute;
+                left: 0; top: 0; width: 100%;
+                background: white;
+                color: black;
                 padding: 30px;
-                margin: 0;
-                box-sizing: border-box;
-                text-align: center;
+                border: 6px double var(--primary);
             }
-
-            .pdf-header h1 { font-family: 'Playfair Display'; font-size: 26pt; color: var(--primary-green); margin: 0; }
-            .pdf-header p { font-size: 12pt; margin: 5px 0; }
-            
-            .student-info h2 { font-family: 'Amiri'; font-size: 24pt; margin: 15px 0 5px; color: var(--primary-green); }
-            
-            .pdf-container table { width: 80%; margin: 10px auto; font-size: 13pt; border-collapse: collapse; }
-            .pdf-container td { padding: 8px; border-bottom: 1px solid #eee; }
-            .pdf-container .total-row { border-top: 2px solid #000; font-size: 16pt; }
-
-            .signature-block {
-                margin-top: 10px;
-                display: flex !important;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .sig-img { width: 140px; margin-bottom: -5px; }
-            .sig-name { font-family: 'Playfair Display'; font-weight: 800; font-size: 14pt; margin: 0; }
-            .sig-role { font-size: 9pt; color: #555; letter-spacing: 1px; }
+            .p-head { text-align: center; border-bottom: 2px solid var(--accent); padding-bottom: 20px; }
+            .p-head h1 { font-family: 'Playfair Display'; font-size: 26pt; margin: 5px 0; color: var(--primary); }
+            .p-body { text-align: center; margin-top: 30px; }
+            .p-body h2 { font-family: 'Amiri'; font-size: 30pt; margin: 0; }
+            .p-table { width: 100%; border-collapse: collapse; margin: 30px 0; font-size: 14pt; }
+            .p-table td, .p-table th { border: 1px solid #000; padding: 10px; text-align: left; }
+            .p-total { background: #eee !important; font-weight: bold; }
+            .p-sig { margin-top: 50px; text-align: right; }
+            .p-sig-name { font-weight: 700; border-top: 1px solid #000; display: inline-block; padding-top: 5px; min-width: 200px; font-size: 14pt; font-family: 'Playfair Display'; }
         }
 
         #loader { display: none; text-align: center; padding: 40px 0; }
-        .spinner { width: 40px; height: 40px; border: 4px solid #eee; border-top-color: var(--primary-green); border-radius: 50%; animation: spin 1s infinite linear; margin: 0 auto; }
+        .spinner { width: 40px; height: 40px; border: 4px solid #eee; border-top-color: var(--primary); border-radius: 50%; animation: spin 1s infinite linear; margin: 0 auto; }
         @keyframes spin { to { transform: rotate(360deg); } }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
     </style>
 </head>
 <body>
 
-    <header id="header">
+    <header id="mainHeader">
         <div class="header-content">
-            <div class="logo-container">
+            <div class="logo-box">
                 <img src="1000545194.webp" alt="Logo" onerror="this.src='https://via.placeholder.com/100'">
             </div>
             <div class="header-text">
                 <h1>Bayanul Uloom Suffa Dars</h1>
-                <div class="location">Chemmankadav Kongayam</div>
+                <p>Chemmankadav Kongayam, Malappuram</p>
             </div>
         </div>
     </header>
 
-    <div class="dashboard">
-        <div class="sidebar">
+    <div class="wrapper">
+        <aside class="sidebar">
             <div class="card">
-                <h3 style="margin-top:0; color:var(--primary-green);">Portal Login</h3>
-                <input type="tel" id="regNo" placeholder="Enter Register No" autocomplete="off">
-                <button class="search-btn" onclick="triggerSearch()">View Result</button>
+                <div class="input-group">
+                    <label>Registration Number</label>
+                    <input type="tel" id="regNo" placeholder="Enter Register No" onkeypress="if(event.key==='Enter') triggerSearch()">
+                </div>
+                <button class="btn" onclick="triggerSearch()">View Result</button>
             </div>
-        </div>
+        </aside>
 
-        <div class="content-area">
+        <main class="content-area">
             <div id="loader"><div class="spinner"></div></div>
-            <div id="resultOutput"></div>
-        </div>
+            <div id="output">
+                <div class="card" style="text-align:center; padding: 60px 20px; color:#94a3b8;">
+                    Enter your Registration Number to access the Examination Portal.
+                </div>
+            </div>
+        </main>
     </div>
 
     <footer>
         <div class="footer-content">
-            <p>
+            <div class="footer-desc">
                 <strong>Suffa Dars</strong> is a traditional Islamic palli dars (mosque-based learning) system conducted under the Alathurpadi Dars in Melmuri, Malappuram. It is part of the classical method of Islamic education where students study religious subjects such as Qur'an, Hadith, Fiqh, and Arabic under the guidance of scholars. The system follows the traditional dars style, focusing on spiritual development, discipline, and deep Islamic knowledge within a mosque environment.
-            </p>
-            <div style="margin-top:20px; font-size: 0.8rem; opacity: 0.6;">© 2026 Bayanul Uloom Suffa Dars. Official Examination Authority.</div>
+            </div>
+            <div style="font-size: 0.85rem; font-weight: 600; color: var(--primary);">© 2026 Bayanul Uloom Suffa Dars. Official Examination Authority.</div>
         </div>
     </footer>
 
+    <!-- PRINT TEMPLATE (LETTER SIZE) -->
+    <div class="print-only" id="printArea">
+        <div class="p-head">
+            <img src="1000545194.webp" width="70" onerror="this.style.display='none'">
+            <h1>Bayanul Uloom Suffa Dars</h1>
+            <p>Academic Year 2026 - Official Marksheet</p>
+        </div>
+        <div class="p-body">
+            <h2 id="pName">Student Name</h2>
+            <p>Registration No: <strong id="pId">0000</strong></p>
+            <table class="p-table" id="pTable"></table>
+        </div>
+        <div class="p-sig">
+            <img src="Sign01.png" height="60" onerror="this.style.display='none'"><br>
+            <div class="p-sig-name">Muhammed Saneer Faizy Wayand</div>
+        </div>
+    </div>
+
     <script>
+        // High-performance scroll listener for the Glide Effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                document.body.classList.add('is-scrolled');
+            } else {
+                document.body.classList.remove('is-scrolled');
+            }
+        }, { passive: true });
+
         const students = {
             "3251":{name:"Muhammed Javad",mahalli:35,Hulasa:35,SA:30,VIVA:35},
             "3253":{name:"Muhammed Fasil",Umdhah:44,Thuhfa:35,SA:50,VIVA:50},
@@ -308,75 +332,55 @@
             "3283":{name:"Muhammed Arshad",Noorulabsar:35,Meezan:35,SA:25,VIVA:30}
         };
 
-        window.addEventListener('scroll', () => {
-            document.body.classList.toggle('is-scrolled', window.scrollY > 20);
-        });
-
         function triggerSearch() {
-            const out = document.getElementById('resultOutput');
-            const loader = document.getElementById('loader');
             const id = document.getElementById('regNo').value.trim();
-            
+            const out = document.getElementById('output');
+            const loader = document.getElementById('loader');
+
+            if(!id) return;
             out.innerHTML = "";
             loader.style.display = "block";
 
             setTimeout(() => {
                 loader.style.display = "none";
-                const student = students[id];
-
-                if(student) {
-                    let rows = "";
-                    let total = 0;
-                    Object.keys(student).forEach(key => {
-                        if(key !== 'name') {
-                            rows += `<tr><td>${key.toUpperCase()}</td><td class="val">${student[key]}</td></tr>`;
-                            total += Number(student[key]);
+                const s = students[id];
+                if(s) {
+                    let rows = "", total = 0;
+                    Object.keys(s).forEach(k => {
+                        if(k !== 'name') {
+                            rows += `<tr><td>${k.toUpperCase()}</td><td class="val">${s[k]}</td></tr>`;
+                            total += s[k];
                         }
                     });
 
                     out.innerHTML = `
-                        <div class="card" style="animation: slideIn 0.5s ease-out;">
-                            <div class="screen-only">
-                                <h2 style="font-family:'Amiri'; font-size:2.2rem; color:var(--primary-green); margin:0;">${student.name}</h2>
-                                <p style="color:#666; margin-bottom:20px;">Registration: ${id}</p>
-                                <table>${rows}<tr class="total-row"><td>TOTAL SCORE</td><td class="val">${total}</td></tr></table>
-                                <button class="search-btn" style="background:#2c3e50; margin-top:30px;" onclick="window.print()">Print Official PDF</button>
-                            </div>
-
-                            <div class="pdf-container">
-                                <div class="pdf-header">
-                                    <img src="1000545194.webp" style="width:70px;" onerror="this.style.display='none'">
-                                    <h1>Bayanul Uloom Suffa Dars</h1>
-                                    <p>Chemmankadav Kongayam, Malappuram</p>
-                                    <div style="margin:15px auto; border-bottom:2px solid var(--gold-accent); width:200px; padding-bottom:5px; font-weight:700;">MARKSHEET 2026</div>
-                                </div>
-
-                                <div class="student-info">
-                                    <h2>${student.name}</h2>
-                                    <p style="margin-top:0;">Register No: <strong>${id}</strong></p>
-                                </div>
-
-                                <table>
-                                    ${rows}
-                                    <tr class="total-row"><td>GRAND TOTAL</td><td class="val">${total}</td></tr>
-                                </table>
-
-                                <div class="signature-block">
-                                    <img src="Sign01.png" class="sig-img" onerror="this.style.display='none'">
-                                    <p class="sig-name">Muhammed Saneer Faizy Wayand</p>
-                                    <p class="sig-role">PRINCIPAL</p>
-                                </div>
-                            </div>
+                        <div class="card fade-in">
+                            <h2 style="font-family:'Amiri'; font-size: 2.2rem; margin:0;">${s.name}</h2>
+                            <p style="color:#64748b; margin-bottom: 20px;">Reg No: ${id}</p>
+                            <table>
+                                <thead><tr><th align="left">Subject</th><th align="right">Score</th></tr></thead>
+                                <tbody>${rows}<tr class="total-row"><td>TOTAL SCORE</td><td class="val">${total}</td></tr></tbody>
+                            </table>
+                            <button class="btn btn-print" onclick="window.print()">Download Marksheet (Letter Size)</button>
                         </div>
                     `;
-                    if(window.innerWidth < 900) out.scrollIntoView({behavior:'smooth'});
+
+                    // Update Print Area
+                    document.getElementById('pName').innerText = s.name;
+                    document.getElementById('pId').innerText = id;
+                    document.getElementById('pTable').innerHTML = `
+                        <tr><th>Subject</th><th style="text-align:right">Score</th></tr>
+                        ${rows}
+                        <tr class="p-total"><td>GRAND TOTAL</td><td style="text-align:right">${total}</td></tr>
+                    `;
+
+                    if(window.innerWidth < 850) out.scrollIntoView({behavior:'smooth'});
                 } else {
-                    out.innerHTML = `<div class="card" style="text-align:center; color:#e74c3c;">ID Not Found. Please verify and try again.</div>`;
+                    out.innerHTML = `<div class="card fade-in" style="text-align:center; color:#ef4444;">ID Not Found.</div>`;
                 }
-            }, 600);
+            }, 500);
         }
     </script>
-    <style> @keyframes slideIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} } </style>
 </body>
 </html>
 
