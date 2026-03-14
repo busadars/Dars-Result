@@ -5,46 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bayanul Uloom Suffa Dars - Examination Portal</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Poppins:wght@300;400;600&display=swap');
 
         :root {
             --primary-green: #0b6b3a;
-            --secondary-green: #1fa463;
             --gold-accent: #c5a059;
-            --dark-text: #2c3e50;
+            --bg-light: #f4f7f6;
             --transition-speed: 0.8s;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: #f4f7f6;
+            background: var(--bg-light);
             margin: 0;
             padding: 0;
-            color: var(--dark-text);
-            overflow-x: hidden;
+            color: #2c3e50;
         }
 
-        /* --- GLIDE HEADER --- */
+        /* --- GLIDE HEADER (0.10 STYLE COMPRESSION) --- */
         header {
             background: linear-gradient(135deg, var(--primary-green), #064425);
             color: white;
-            padding: 60px 20px;
+            padding: 70px 20px;
             text-align: center;
             border-bottom: 5px solid var(--gold-accent);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: all var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
-            position: relative;
-            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: all var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .header-content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             max-width: 1200px;
             margin: 0 auto;
-            transition: all var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
+            transition: inherit;
         }
 
         .logo-container img {
@@ -53,237 +51,224 @@
             border-radius: 50%;
             border: 4px solid white;
             background: white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            margin-bottom: 15px;
-            transition: all var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
+            margin-bottom: 20px;
+            transition: inherit;
         }
 
         header h1 {
-            font-family: 'Amiri', serif;
-            margin: 10px 0 5px;
-            font-size: 2.8rem;
-            letter-spacing: 1px;
-            line-height: 1.2;
-            transition: all var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        header p {
+            font-family: 'Playfair Display', serif;
             margin: 0;
-            font-weight: 300;
-            opacity: 0.9;
-            font-size: 1.2rem;
-            transition: all var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
+            font-size: 3rem;
+            font-weight: 900;
+            transition: inherit;
+            line-height: 1.1;
         }
 
-        /* Glide Animation States */
+        header .location {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-top: 8px;
+            font-weight: 300;
+            transition: inherit;
+            letter-spacing: 1px;
+        }
+
+        /* SEARCH ACTIVE / FOCUSED STATE */
         body.is-focused header {
-            padding: 15px 40px;
-            text-align: left;
+            padding: 10px 30px; /* Highly compressed vertical space */
         }
 
         body.is-focused .header-content {
             flex-direction: row;
             justify-content: flex-start;
-            align-items: center;
-            gap: 25px;
+            gap: 15px;
         }
 
         body.is-focused .logo-container img {
-            width: 60px;
-            height: 60px;
+            width: 42px;
+            height: 42px;
             margin-bottom: 0;
             border-width: 2px;
         }
 
         body.is-focused header h1 {
-            font-size: 1.6rem;
-            margin: 0;
+            font-size: 1.25rem; /* Reduced for single line */
+            white-space: nowrap;
         }
 
-        body.is-focused header p {
-            font-size: 0.95rem;
-            opacity: 1;
+        body.is-focused header .location {
+            font-size: 0.85rem;
+            margin-top: 0;
+            margin-left: 10px;
+            padding-left: 10px;
+            border-left: 1.5px solid rgba(255,255,255,0.4);
+            white-space: nowrap;
         }
 
-        /* --- MAIN UI --- */
-        .main-content {
-            max-width: 550px;
-            margin: -35px auto 50px;
+        /* --- DASHBOARD LAYOUT --- */
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            margin: 30px auto;
+            gap: 25px;
+            padding: 0 20px;
+        }
+
+        @media (min-width: 900px) {
+            .dashboard { flex-direction: row; align-items: flex-start; }
+            .sidebar { width: 340px; position: sticky; top: 100px; }
+            .content-area { flex: 1; }
+        }
+
+        .card {
             background: white;
-            padding: 40px;
+            padding: 30px;
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            position: relative;
-            z-index: 110;
-            transition: margin-top var(--transition-speed) ease;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.03);
         }
 
-        body.is-focused .main-content {
-            margin-top: 40px;
-        }
-
-        .input-section { text-align: center; }
+        .search-box h3 { margin: 0 0 20px; font-family: 'Playfair Display', serif; color: var(--primary-green); }
 
         input {
             width: 100%;
             padding: 18px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
+            border: 2px solid #edf2f0;
+            border-radius: 14px;
             font-size: 18px;
             box-sizing: border-box;
-            transition: all 0.3s;
-            text-align: center;
-            font-family: inherit;
-        }
-
-        input:focus {
-            border-color: var(--primary-green);
             outline: none;
-            box-shadow: 0 5px 15px rgba(11, 107, 58, 0.1);
+            text-align: center;
+            transition: border 0.3s, box-shadow 0.3s;
         }
 
-        .btn-search {
-            margin-top: 20px;
+        input:focus { border-color: var(--primary-green); box-shadow: 0 0 0 4px rgba(11, 107, 58, 0.1); }
+
+        .search-btn {
             width: 100%;
-            padding: 16px;
             background: var(--primary-green);
             color: white;
             border: none;
-            border-radius: 12px;
-            font-size: 18px;
+            padding: 18px;
+            border-radius: 14px;
+            margin-top: 15px;
             font-weight: 600;
+            font-size: 16px;
             cursor: pointer;
-            transition: transform 0.2s, background 0.3s;
+            transition: background 0.3s;
         }
 
-        .btn-search:active { transform: scale(0.98); }
+        .search-btn:hover { background: #08522c; }
 
-        /* --- RESULTS --- */
-        #result { margin-top: 30px; }
-
-        .result-card {
-            animation: slideUp 0.5s ease-out forwards;
+        /* --- LOADER --- */
+        #loader { display: none; text-align: center; padding: 60px 0; }
+        .spinner {
+            width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--primary-green);
+            border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 15px;
         }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .student-name {
-            font-family: 'Amiri', serif;
-            color: var(--primary-green);
-            font-size: 2rem;
-            text-align: center;
-            margin: 0;
-        }
-
-        table {
-            width: 100%;
-            margin: 25px 0;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-
-        th { color: var(--primary-green); font-size: 0.9rem; letter-spacing: 1px; }
-
-        .total-row {
-            background: #f8fcf9;
-            font-weight: bold;
-            color: var(--primary-green);
-            font-size: 1.1rem;
-        }
+        /* --- RESULT TABLE --- */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        td, th { padding: 16px; border-bottom: 1px solid #f0f0f0; text-align: left; }
+        .val { text-align: right; font-weight: 700; color: var(--primary-green); }
+        .total-row { background: #f9fdfb; border-top: 2px solid var(--gold-accent); }
+        .total-row td { font-weight: 800; font-size: 1.3rem; color: var(--primary-green); }
 
         .btn-print {
             width: 100%;
-            padding: 16px;
-            background: var(--dark-text);
+            background: #2c3e50;
             color: white;
+            padding: 18px;
+            border-radius: 14px;
             border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
+            margin-top: 30px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
+            font-weight: 600;
+            font-size: 16px;
         }
 
-        /* --- PRINT LAYOUT --- */
+        /* --- PRINT PDF --- */
         @media print {
-            header, .input-section, .btn-print { display: none !important; }
+            header, .sidebar, .btn-print, #loader, .placeholder-card { display: none !important; }
             body { background: white !important; }
-            .main-content { box-shadow: none; margin: 0 !important; max-width: 100% !important; padding: 0 !important; }
+            .dashboard { display: block; margin: 0; padding: 0; }
+            .card { border: none; box-shadow: none; padding: 0; }
             
-            .print-header {
+            .pdf-container {
+                display: flex !important;
+                flex-direction: column;
+                border: 12px double var(--primary-green);
+                padding: 50px;
+                min-height: 94vh;
+                text-align: center;
+            }
+
+            .pdf-header { margin-bottom: 40px; }
+            .pdf-logo { width: 110px; margin-bottom: 15px; }
+            .pdf-title { font-family: 'Playfair Display', serif; font-size: 36pt; color: var(--primary-green); margin: 0; }
+            
+            .signature-box {
+                margin-top: auto;
                 display: flex !important;
                 flex-direction: column;
                 align-items: center;
-                text-align: center;
-                border-bottom: 3px double var(--gold-accent);
                 padding-bottom: 20px;
-                margin-bottom: 40px;
             }
 
-            .print-logo { width: 100px; height: 100px; margin-bottom: 10px; }
-            .print-title { font-family: 'Amiri', serif; font-size: 28pt; color: var(--primary-green); margin: 0; }
-            
-            .signature-area {
-                display: flex !important;
-                flex-direction: column;
-                align-items: flex-end;
-                margin-top: 60px;
-                padding-right: 40px;
-            }
-
-            .sig-image {
-                width: 180px;
-                height: auto;
-                margin-bottom: -10px;
-            }
-
-            .sig-text {
-                border-top: 1.5px solid #000;
-                width: 220px;
-                text-align: center;
-                padding-top: 5px;
+            .sig-img { width: 220px; margin-bottom: -10px; }
+            .sig-line {
+                width: 280px;
+                border-top: 2px solid #000;
+                padding-top: 10px;
+                font-family: 'Playfair Display', serif;
                 font-weight: bold;
-                font-size: 12pt;
+                font-size: 16pt;
+                color: #000;
             }
         }
 
-        .print-header, .signature-area { display: none; }
-
+        .pdf-container, .signature-box { display: none; }
     </style>
 </head>
 <body>
 
-    <header id="mainHeader">
+    <header id="header">
         <div class="header-content">
             <div class="logo-container">
                 <img src="1000545194.webp" alt="Logo" onerror="this.src='https://via.placeholder.com/130'">
             </div>
-            <div class="header-text">
+            <div>
                 <h1>Bayanul Uloom Suffa Dars</h1>
-                <p>Chemmankadav Kongayam</p>
+                <div class="location">Chemmankadav Kongayam</div>
             </div>
         </div>
     </header>
 
-    <div class="main-content">
-        <div class="input-section">
-            <input type="text" id="regNo" placeholder="Enter Register Number" autocomplete="off">
-            <button class="btn-search" onclick="search()">View Marksheet</button>
+    <div class="dashboard">
+        <!-- Sidebar: Search Control -->
+        <div class="sidebar">
+            <div class="card search-box">
+                <h3>Examination Portal</h3>
+                <input type="text" id="regNo" placeholder="Enter Register No" autocomplete="off">
+                <button class="search-btn" onclick="triggerSearch()">Search Marksheet</button>
+            </div>
         </div>
 
-        <div id="result"></div>
+        <!-- Content Area: Result Display -->
+        <div class="content-area">
+            <div id="loader">
+                <div class="spinner"></div>
+                <p style="font-weight:600; color:var(--primary-green);">Accessing Secure Ledger...</p>
+            </div>
+            
+            <div id="resultOutput">
+                <div class="card placeholder-card" style="text-align:center; color:#adb5bd; padding: 80px 20px;">
+                    <p>Provide a Registration Number in the sidebar to view side-by-side results.</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -323,77 +308,79 @@
             "3283":{name:"Muhammed Arshad",Noorulabsar:35,Meezan:35,SA:25,VIVA:30}
         };
 
-        const regInput = document.getElementById("regNo");
+        const regInput = document.getElementById('regNo');
+        regInput.addEventListener('focus', () => document.body.classList.add('is-focused'));
+        regInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') triggerSearch(); });
 
-        // Glide Activation Logic
-        regInput.addEventListener('focus', () => {
+        function triggerSearch() {
+            const out = document.getElementById('resultOutput');
+            const loader = document.getElementById('loader');
+            
+            out.innerHTML = "";
+            loader.style.display = "block";
             document.body.classList.add('is-focused');
-        });
 
-        regInput.addEventListener('blur', () => {
-            if (regInput.value.trim() === "") {
-                document.body.classList.remove('is-focused');
-            }
-        });
+            setTimeout(() => {
+                loader.style.display = "none";
+                const id = regInput.value.trim();
+                const student = students[id];
 
-        regInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') search();
-        });
+                if(student) {
+                    let rows = "";
+                    let total = 0;
+                    Object.keys(student).forEach(key => {
+                        if(key !== 'name') {
+                            rows += `<tr><td>${key.toUpperCase()}</td><td class="val">${student[key]}</td></tr>`;
+                            total += Number(student[key]);
+                        }
+                    });
 
-        function search() {
-            const id = regInput.value.trim();
-            const resDiv = document.getElementById("result");
-            const s = students[id];
+                    out.innerHTML = `
+                        <div class="card" style="animation: slideUp 0.5s ease-out;">
+                            <div style="text-align:center; border-bottom:1px solid #eee; padding-bottom:20px; margin-bottom:20px;">
+                                <h2 style="font-family:'Amiri'; font-size:2.5rem; color:var(--primary-green); margin:0;">${student.name}</h2>
+                                <p style="color:#666; font-weight:600; margin-top:5px;">Reg No: ${id}</p>
+                            </div>
 
-            if (s) {
-                let rowsHtml = "";
-                let total = 0;
-                Object.keys(s).forEach(key => {
-                    if (key !== 'name') {
-                        rowsHtml += `<tr><td>${key.toUpperCase()}</td><td style="text-align:right;">${s[key]}</td></tr>`;
-                        total += Number(s[key]);
-                    }
-                });
+                            <table>${rows}<tr class="total-row"><td>AGGREGATE SCORE</td><td class="val">${total}</td></tr></table>
+                            
+                            <button class="btn-print" onclick="window.print()">Download Premium Marksheet (PDF)</button>
 
-                resDiv.innerHTML = `
-                    <div class="result-card">
-                        <div class="print-header">
-                            <img src="1000545194.webp" class="print-logo" onerror="this.src='https://via.placeholder.com/100'">
-                            <div class="print-title">Bayanul Uloom Suffa Dars</div>
-                            <div style="font-size: 14pt;">Chemmankadav Kongayam | Result 2026</div>
+                            <!-- Hidden PDF Logic -->
+                            <div class="pdf-container">
+                                <div class="pdf-header">
+                                    <img src="1000545194.webp" class="pdf-logo">
+                                    <h1 class="pdf-title">Bayanul Uloom Suffa Dars</h1>
+                                    <div style="font-size:15pt; color:#444;">Chemmankadav Kongayam, Malappuram</div>
+                                    <div style="margin-top:25px; font-weight:bold; font-size:18pt; border-bottom:2px solid var(--gold-accent); display:inline-block; padding:0 30px;">OFFICIAL RESULT - 2026</div>
+                                </div>
+
+                                <div style="margin: 40px 0;">
+                                    <h2 style="font-family:'Amiri'; font-size:32pt; color:var(--primary-green); margin:0;">${student.name}</h2>
+                                    <p style="font-size:14pt; color:#333;">Registration Number: <strong>${id}</strong></p>
+                                </div>
+
+                                <table style="width:85%; margin:0 auto; font-size:14pt;">
+                                    ${rows}
+                                    <tr style="border-top:3px solid #333; font-size:18pt;"><td style="font-weight:bold;">GRAND TOTAL</td><td class="val">${total}</td></tr>
+                                </table>
+
+                                <div class="signature-box">
+                                    <img src="Sign01.png" class="sig-img" onerror="this.style.display='none'">
+                                    <div class="sig-line">Muhammed Saneer Faizy</div>
+                                    <div style="font-size:11pt; color:#555; letter-spacing:1px; margin-top:5px;">PRINCIPAL</div>
+                                </div>
+                            </div>
                         </div>
-
-                        <h2 class="student-name">${s.name}</h2>
-                        <p style="text-align:center; color:#666; font-size:0.9rem;">Register No: ${id}</p>
-
-                        <table>
-                            <thead>
-                                <tr><th>SUBJECT</th><th style="text-align:right;">MARKS</th></tr>
-                            </thead>
-                            <tbody>
-                                ${rowsHtml}
-                                <tr class="total-row">
-                                    <td>GRAND TOTAL</td>
-                                    <td style="text-align:right;">${total}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div class="signature-area">
-                            <img src="Sign01.png" class="sig-image" alt="Signature" onerror="this.style.display='none'">
-                            <div class="sig-text">Muhammed Saneer Faizy</div>
-                        </div>
-
-                        <button class="btn-print" onclick="window.print()">
-                            <span>🖨️</span> Print Official Marksheet
-                        </button>
-                    </div>
-                `;
-            } else {
-                resDiv.innerHTML = `<p style="color:#e74c3c; text-align:center; font-weight:bold;">Register number not found.</p>`;
-            }
+                    `;
+                } else {
+                    out.innerHTML = `<div class="card" style="text-align:center; color:#e74c3c; font-weight:600;">⚠️ Registration ID not found in ledger.</div>`;
+                }
+            }, 800);
         }
     </script>
+    <style>
+        @keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    </style>
 </body>
 </html>
-
