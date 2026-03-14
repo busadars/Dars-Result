@@ -189,45 +189,129 @@
             font-size: 16px;
         }
 
-        /* --- PRINT PDF --- */
-        @media print {
-            header, .sidebar, .btn-print, #loader, .placeholder-card { display: none !important; }
-            body { background: white !important; }
-            .dashboard { display: block; margin: 0; padding: 0; }
-            .card { border: none; box-shadow: none; padding: 0; }
-            
-            .pdf-container {
-                display: flex !important;
-                flex-direction: column;
-                border: 12px double var(--primary-green);
-                padding: 50px;
-                min-height: 94vh;
-                text-align: center;
-            }
+         /* --- PRINT PDF --- */
 
-            .pdf-header { margin-bottom: 40px; }
-            .pdf-logo { width: 110px; margin-bottom: 15px; }
-            .pdf-title { font-family: 'Playfair Display', serif; font-size: 36pt; color: var(--primary-green); margin: 0; }
-            
-            .signature-box {
-                margin-top: auto;
-                display: flex !important;
-                flex-direction: column;
-                align-items: center;
-                padding-bottom: 20px;
-            }
+@page{
+    size: Letter;
+    margin: 16mm;
+}
 
-            .sig-img { width: 220px; margin-bottom: -10px; }
-            .sig-line {
-                width: 280px;
-                border-top: 2px solid #000;
-                padding-top: 10px;
-                font-family: 'Playfair Display', serif;
-                font-weight: bold;
-                font-size: 16pt;
-                color: #000;
-            }
-        }
+@media print {
+
+header,
+.sidebar,
+.btn-print,
+#loader,
+.placeholder-card{
+display:none !important;
+}
+
+body{
+background:white !important;
+}
+
+.dashboard{
+display:block;
+margin:0;
+padding:0;
+}
+
+.card{
+border:none;
+box-shadow:none;
+padding:0;
+}
+
+/* PDF PAGE */
+
+.pdf-container{
+display:flex !important;
+flex-direction:column;
+border:8px double var(--primary-green);
+padding:45px;
+min-height:92vh;
+text-align:center;
+background:white;
+}
+
+/* HEADER */
+
+.pdf-header{
+margin-bottom:35px;
+}
+
+.pdf-logo{
+width:100px;
+margin-bottom:12px;
+}
+
+.pdf-title{
+font-family:'Playfair Display',serif;
+font-size:34pt;
+color:var(--primary-green);
+margin:0;
+}
+
+/* STUDENT */
+
+.pdf-container h2{
+font-family:'Amiri';
+font-size:30pt;
+color:var(--primary-green);
+}
+
+/* TABLE */
+
+.pdf-container table{
+width:85%;
+margin:35px auto;
+font-size:14pt;
+border-collapse:collapse;
+}
+
+.pdf-container td{
+padding:12px;
+border-bottom:1px solid #ddd;
+}
+
+.pdf-container .val{
+text-align:right;
+font-weight:bold;
+color:var(--primary-green);
+}
+
+/* TOTAL */
+
+.pdf-container tr:last-child{
+border-top:3px solid #000;
+font-size:18pt;
+}
+
+/* SIGNATURE */
+
+.signature-box{
+margin-top:auto;
+display:flex !important;
+flex-direction:column;
+align-items:center;
+padding-top:30px;
+}
+
+.sig-img{
+width:200px;
+margin-bottom:-12px;
+}
+
+.sig-line{
+width:260px;
+border-top:2px solid #000;
+padding-top:8px;
+font-family:'Playfair Display',serif;
+font-weight:bold;
+font-size:15pt;
+}
+
+}
 
         .pdf-container, .signature-box { display: none; }
     </style>
