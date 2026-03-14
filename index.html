@@ -2,16 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Bayanul Uloom Suffa Dars - Examination Portal</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Poppins:wght@300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Poppins:wght@300;400;500;600&display=swap');
 
         :root {
             --primary-green: #0b6b3a;
+            --primary-dark: #064425;
             --gold-accent: #c5a059;
-            --bg-light: #f4f7f6;
-            --transition-speed: 0.8s;
+            --bg-light: #f4f8f6;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --transition-smooth: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
@@ -19,21 +22,24 @@
             background: var(--bg-light);
             margin: 0;
             padding: 0;
-            color: #2c3e50;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* --- GLIDE HEADER (0.10 STYLE COMPRESSION) --- */
+        /* --- MODERN GLIDE HEADER --- */
         header {
-            background: linear-gradient(135deg, var(--primary-green), #064425);
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 70px 20px;
+            padding: 60px 20px;
             text-align: center;
-            border-bottom: 5px solid var(--gold-accent);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            transition: all var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
+            border-bottom: 4px solid var(--gold-accent);
+            box-shadow: 0 10px 30px rgba(11, 107, 58, 0.15);
+            transition: all var(--transition-smooth);
             position: sticky;
             top: 0;
             z-index: 1000;
+            will-change: padding, height;
         }
 
         .header-content {
@@ -42,278 +48,325 @@
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
-            transition: inherit;
+            gap: 15px;
+            transition: all var(--transition-smooth);
+        }
+
+        .logo-container {
+            transition: all var(--transition-smooth);
         }
 
         .logo-container img {
-            width: 130px;
-            height: 130px;
+            width: clamp(90px, 25vw, 120px);
+            height: clamp(90px, 25vw, 120px);
             border-radius: 50%;
-            border: 4px solid white;
+            border: 3px solid rgba(255,255,255,0.9);
             background: white;
-            margin-bottom: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
             transition: inherit;
+            object-fit: contain;
+        }
+
+        .header-text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all var(--transition-smooth);
         }
 
         header h1 {
             font-family: 'Playfair Display', serif;
             margin: 0;
-            font-size: 3rem;
+            /* Fluid typography prevents awkward line breaks on mobile */
+            font-size: clamp(1.8rem, 6vw, 3.2rem); 
             font-weight: 900;
-            transition: inherit;
             line-height: 1.1;
+            transition: inherit;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         header .location {
-            font-size: 1.2rem;
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
             opacity: 0.9;
             margin-top: 8px;
             font-weight: 300;
-            transition: inherit;
             letter-spacing: 1px;
+            transition: inherit;
         }
 
-        /* SEARCH ACTIVE / FOCUSED STATE */
+        /* --- GLIDE STATE (SCROLLED / FOCUSED) --- */
         body.is-focused header {
-            padding: 10px 30px; /* Highly compressed vertical space */
+            padding: 12px 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
 
         body.is-focused .header-content {
             flex-direction: row;
-            justify-content: flex-start;
+            justify-content: center;
             gap: 15px;
         }
 
         body.is-focused .logo-container img {
-            width: 42px;
-            height: 42px;
-            margin-bottom: 0;
+            width: 46px;
+            height: 46px;
             border-width: 2px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        body.is-focused .header-text {
+            align-items: flex-start; /* Align left when compact */
+            justify-content: center;
         }
 
         body.is-focused header h1 {
-            font-size: 1.25rem; /* Reduced for single line */
-            white-space: nowrap;
+            font-size: clamp(1.1rem, 4vw, 1.4rem);
+            text-shadow: none;
         }
 
         body.is-focused header .location {
-            font-size: 0.85rem;
-            margin-top: 0;
-            margin-left: 10px;
-            padding-left: 10px;
-            border-left: 1.5px solid rgba(255,255,255,0.4);
-            white-space: nowrap;
+            font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+            margin-top: 2px;
+            opacity: 0.8;
+            letter-spacing: 0.5px;
+            /* No longer hiding on mobile! Just scaling down nicely */
         }
 
-        /* --- DASHBOARD LAYOUT --- */
+        @media (min-width: 768px) {
+            /* On desktop, keep them inline during glide */
+            body.is-focused .header-text {
+                flex-direction: row;
+                align-items: baseline;
+            }
+            body.is-focused header .location {
+                margin-top: 0;
+                margin-left: 12px;
+                padding-left: 12px;
+                border-left: 1px solid rgba(255,255,255,0.4);
+            }
+        }
+
+        /* --- MODERN DASHBOARD LAYOUT --- */
         .dashboard {
             display: flex;
             flex-direction: column;
             max-width: 1200px;
-            margin: 30px auto;
-            gap: 25px;
+            margin: 40px auto;
+            gap: 30px;
             padding: 0 20px;
         }
 
         @media (min-width: 900px) {
             .dashboard { flex-direction: row; align-items: flex-start; }
-            .sidebar { width: 340px; position: sticky; top: 100px; }
+            .sidebar { width: 360px; position: sticky; top: 110px; }
             .content-area { flex: 1; }
         }
 
         .card {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-            border: 1px solid rgba(0,0,0,0.03);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 35px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.02);
+            border: 1px solid rgba(255,255,255,0.8);
         }
 
-        .search-box h3 { margin: 0 0 20px; font-family: 'Playfair Display', serif; color: var(--primary-green); }
+        .search-box h3 { 
+            margin: 0 0 25px; 
+            font-family: 'Playfair Display', serif; 
+            color: var(--primary-green);
+            font-size: 1.6rem;
+            text-align: center;
+        }
+
+        .input-group {
+            position: relative;
+        }
 
         input {
             width: 100%;
-            padding: 18px;
-            border: 2px solid #edf2f0;
-            border-radius: 14px;
-            font-size: 18px;
+            padding: 18px 20px;
+            background: #f8faf9;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            color: var(--text-dark);
             box-sizing: border-box;
             outline: none;
             text-align: center;
-            transition: border 0.3s, box-shadow 0.3s;
+            transition: all 0.3s ease;
         }
 
-        input:focus { border-color: var(--primary-green); box-shadow: 0 0 0 4px rgba(11, 107, 58, 0.1); }
+        input::placeholder { color: #94a3b8; font-weight: 400; }
+        input:focus { 
+            border-color: var(--primary-green); 
+            background: white;
+            box-shadow: 0 0 0 5px rgba(11, 107, 58, 0.1); 
+        }
 
         .search-btn {
             width: 100%;
-            background: var(--primary-green);
+            background: linear-gradient(135deg, var(--primary-green), #08522c);
             color: white;
             border: none;
             padding: 18px;
-            border-radius: 14px;
+            border-radius: 16px;
             margin-top: 15px;
             font-weight: 600;
             font-size: 16px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(11, 107, 58, 0.2);
         }
 
-        .search-btn:hover { background: #08522c; }
+        .search-btn:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(11, 107, 58, 0.3); 
+        }
+        .search-btn:active { transform: translateY(0); }
 
         /* --- LOADER --- */
         #loader { display: none; text-align: center; padding: 60px 0; }
         .spinner {
-            width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--primary-green);
-            border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 15px;
+            width: 45px; height: 45px; 
+            border: 4px solid rgba(11, 107, 58, 0.1); 
+            border-top: 4px solid var(--primary-green);
+            border-radius: 50%; 
+            animation: spin 0.8s cubic-bezier(0.5, 0.1, 0.4, 0.9) infinite; 
+            margin: 0 auto 20px;
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* --- RESULT TABLE --- */
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        td, th { padding: 16px; border-bottom: 1px solid #f0f0f0; text-align: left; }
-        .val { text-align: right; font-weight: 700; color: var(--primary-green); }
-        .total-row { background: #f9fdfb; border-top: 2px solid var(--gold-accent); }
-        .total-row td { font-weight: 800; font-size: 1.3rem; color: var(--primary-green); }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 25px; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; }
+        td, th { padding: 18px; border-bottom: 1px solid #f1f5f9; text-align: left; }
+        tr:last-child td { border-bottom: none; }
+        .subject-name { font-weight: 500; color: var(--text-muted); }
+        .val { text-align: right; font-weight: 700; color: var(--primary-green); font-size: 1.1rem; }
+        
+        .total-row { background: #f8faf9; }
+        .total-row td { font-weight: 800; font-size: 1.2rem; color: var(--text-dark); border-top: 2px solid var(--gold-accent); }
+        .total-row .val { font-size: 1.4rem; color: var(--primary-green); }
 
         .btn-print {
             width: 100%;
-            background: #2c3e50;
+            background: var(--text-dark);
             color: white;
             padding: 18px;
-            border-radius: 14px;
+            border-radius: 16px;
             border: none;
             margin-top: 30px;
             cursor: pointer;
             font-weight: 600;
             font-size: 16px;
+            transition: all 0.3s ease;
         }
+        .btn-print:hover { background: #0f172a; transform: translateY(-2px); }
 
-         /* --- PRINT PDF --- */
-
-@page{
-    size: Letter;
-    margin: 16mm;
-}
-
-@media print {
-
-header,
-.sidebar,
-.btn-print,
-#loader,
-.placeholder-card{
-display:none !important;
-}
-
-body{
-background:white !important;
-}
-
-.dashboard{
-display:block;
-margin:0;
-padding:0;
-}
-
-.card{
-border:none;
-box-shadow:none;
-padding:0;
-}
-
-/* PDF PAGE */
-
-.pdf-container{
-display:flex !important;
-flex-direction:column;
-border:8px double var(--primary-green);
-padding:45px;
-min-height:92vh;
-text-align:center;
-background:white;
-}
-
-/* HEADER */
-
-.pdf-header{
-margin-bottom:35px;
-}
-
-.pdf-logo{
-width:100px;
-margin-bottom:12px;
-}
-
-.pdf-title{
-font-family:'Playfair Display',serif;
-font-size:34pt;
-color:var(--primary-green);
-margin:0;
-}
-
-/* STUDENT */
-
-.pdf-container h2{
-font-family:'Amiri';
-font-size:30pt;
-color:var(--primary-green);
-}
-
-/* TABLE */
-
-.pdf-container table{
-width:85%;
-margin:35px auto;
-font-size:14pt;
-border-collapse:collapse;
-}
-
-.pdf-container td{
-padding:12px;
-border-bottom:1px solid #ddd;
-}
-
-.pdf-container .val{
-text-align:right;
-font-weight:bold;
-color:var(--primary-green);
-}
-
-/* TOTAL */
-
-.pdf-container tr:last-child{
-border-top:3px solid #000;
-font-size:18pt;
-}
-
-/* SIGNATURE */
-
-.signature-box{
-margin-top:auto;
-display:flex !important;
-flex-direction:column;
-align-items:center;
-padding-top:30px;
-}
-
-.sig-img{
-width:200px;
-margin-bottom:-12px;
-}
-
-.sig-line{
-width:260px;
-border-top:2px solid #000;
-padding-top:8px;
-font-family:'Playfair Display',serif;
-font-weight:bold;
-font-size:15pt;
-}
-
-}
-
+        /* --- PDF PRINT LAYOUT (Strictly 1 Page) --- */
         .pdf-container, .signature-box { display: none; }
+
+        @page { size: Letter; margin: 10mm; }
+
+        @media print {
+            header, .sidebar, .btn-print, #loader, .placeholder-card, .screen-only {
+                display: none !important;
+            }
+
+            html, body {
+                background: white !important;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .dashboard {
+                display: block;
+                margin: 0;
+                padding: 0;
+                height: 100%;
+            }
+
+            .content-area, #resultOutput, .card {
+                height: 100%;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+                background: transparent;
+                backdrop-filter: none;
+            }
+
+            /* Container stretched to exact page size */
+            .pdf-container {
+                display: flex !important;
+                flex-direction: column;
+                justify-content: space-between; 
+                border: 8px double var(--primary-green);
+                padding: 40px;
+                height: 100vh; 
+                box-sizing: border-box;
+                text-align: center;
+                background: white;
+                page-break-inside: avoid;
+            }
+
+            .pdf-header { margin-bottom: 20px; }
+            .pdf-logo { width: 100px; margin-bottom: 12px; }
+            .pdf-title {
+                font-family: 'Playfair Display', serif;
+                font-size: 30pt;
+                color: var(--primary-green);
+                margin: 0;
+            }
+
+            .pdf-container h2 {
+                font-family: 'Amiri';
+                font-size: 28pt;
+                color: var(--primary-green);
+                margin: 10px 0;
+            }
+
+            .table-wrapper {
+                flex-grow: 1;
+                display: flex;
+                align-items: center;
+            }
+
+            .pdf-container table {
+                width: 85%;
+                margin: 0 auto;
+                font-size: 14pt;
+                border-collapse: collapse;
+                border: none;
+            }
+
+            .pdf-container td {
+                padding: 12px;
+                border-bottom: 1px solid #ddd;
+                text-align: left;
+            }
+
+            .pdf-container .val { text-align: right; font-weight: bold; color: var(--primary-green); }
+            .pdf-container tr:last-child { border-top: 3px solid #000; font-size: 18pt; }
+
+            .signature-box {
+                margin-top: auto;
+                display: flex !important;
+                flex-direction: column;
+                align-items: center;
+                padding-top: 20px;
+            }
+            .sig-img { width: 180px; margin-bottom: -15px; }
+            .sig-line {
+                width: 260px;
+                border-top: 2px solid #000;
+                padding-top: 8px;
+                font-family: 'Playfair Display', serif;
+                font-weight: bold;
+                font-size: 15pt;
+            }
+        }
     </style>
 </head>
 <body>
@@ -323,7 +376,7 @@ font-size:15pt;
             <div class="logo-container">
                 <img src="1000545194.webp" alt="Logo" onerror="this.src='https://via.placeholder.com/130'">
             </div>
-            <div>
+            <div class="header-text">
                 <h1>Bayanul Uloom Suffa Dars</h1>
                 <div class="location">Chemmankadav Kongayam</div>
             </div>
@@ -331,25 +384,28 @@ font-size:15pt;
     </header>
 
     <div class="dashboard">
-        <!-- Sidebar: Search Control -->
+        <!-- Sidebar -->
         <div class="sidebar">
             <div class="card search-box">
                 <h3>Examination Portal</h3>
-                <input type="text" id="regNo" placeholder="Enter Register No" autocomplete="off">
+                <div class="input-group">
+                    <input type="tel" id="regNo" placeholder="Enter Register No" autocomplete="off">
+                </div>
                 <button class="search-btn" onclick="triggerSearch()">Search Marksheet</button>
             </div>
         </div>
 
-        <!-- Content Area: Result Display -->
+        <!-- Content Area -->
         <div class="content-area">
             <div id="loader">
                 <div class="spinner"></div>
-                <p style="font-weight:600; color:var(--primary-green);">Accessing Secure Ledger...</p>
+                <p style="font-weight:500; color:var(--primary-green); margin-top:10px;">Accessing Secure Ledger...</p>
             </div>
             
             <div id="resultOutput">
-                <div class="card placeholder-card" style="text-align:center; color:#adb5bd; padding: 80px 20px;">
-                    <p>Provide a Registration Number in the sidebar to view side-by-side results.</p>
+                <div class="card placeholder-card" style="text-align:center; color:#94a3b8; padding: 80px 20px; border-style: dashed;">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:20px; opacity:0.5;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <p style="font-size: 1.1rem; margin: 0;">Provide a Registration Number in the sidebar<br>to view the official marksheet.</p>
                 </div>
             </div>
         </div>
@@ -393,16 +449,36 @@ font-size:15pt;
         };
 
         const regInput = document.getElementById('regNo');
-        regInput.addEventListener('focus', () => document.body.classList.add('is-focused'));
+        const body = document.body;
+
+        // Smoother logic for the glide:
+        regInput.addEventListener('focus', () => {
+            body.classList.add('is-focused');
+            // Smoothly scroll to top so the header transitions naturally in view
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
         regInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') triggerSearch(); });
+
+        // Less aggressive scroll listener to stop glitches
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 40) {
+                body.classList.add('is-focused');
+            } else if (document.activeElement !== regInput && window.scrollY <= 10) {
+                body.classList.remove('is-focused');
+            }
+        }, { passive: true });
 
         function triggerSearch() {
             const out = document.getElementById('resultOutput');
             const loader = document.getElementById('loader');
             
+            // Unfocus input on search to hide keyboard on mobile
+            regInput.blur();
+            body.classList.add('is-focused');
+            
             out.innerHTML = "";
             loader.style.display = "block";
-            document.body.classList.add('is-focused');
 
             setTimeout(() => {
                 loader.style.display = "none";
@@ -414,40 +490,49 @@ font-size:15pt;
                     let total = 0;
                     Object.keys(student).forEach(key => {
                         if(key !== 'name') {
-                            rows += `<tr><td>${key.toUpperCase()}</td><td class="val">${student[key]}</td></tr>`;
+                            rows += `<tr><td class="subject-name">${key.toUpperCase()}</td><td class="val">${student[key]}</td></tr>`;
                             total += Number(student[key]);
                         }
                     });
 
                     out.innerHTML = `
-                        <div class="card" style="animation: slideUp 0.5s ease-out;">
-                            <div style="text-align:center; border-bottom:1px solid #eee; padding-bottom:20px; margin-bottom:20px;">
-                                <h2 style="font-family:'Amiri'; font-size:2.5rem; color:var(--primary-green); margin:0;">${student.name}</h2>
-                                <p style="color:#666; font-weight:600; margin-top:5px;">Reg No: ${id}</p>
+                        <div class="card" style="animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);">
+                            
+                            <!-- Screen View Only -->
+                            <div class="screen-only">
+                                <div style="text-align:center; padding-bottom:25px; margin-bottom:25px;">
+                                    <h2 style="font-family:'Amiri'; font-size:clamp(2rem, 5vw, 2.8rem); color:var(--primary-green); margin:0; line-height: 1.2;">${student.name}</h2>
+                                    <span style="display:inline-block; background:#e2e8f0; color:var(--text-dark); padding:6px 16px; border-radius:20px; font-weight:600; font-size:0.9rem; margin-top:12px; letter-spacing:0.5px;">REG NO: ${id}</span>
+                                </div>
+
+                                <table>
+                                    ${rows}
+                                    <tr class="total-row"><td style="border-radius: 0 0 0 12px;">AGGREGATE SCORE</td><td class="val" style="border-radius: 0 0 12px 0;">${total}</td></tr>
+                                </table>
+                                
+                                <button class="btn-print" onclick="window.print()">Download Premium Marksheet (PDF)</button>
                             </div>
 
-                            <table>${rows}<tr class="total-row"><td>AGGREGATE SCORE</td><td class="val">${total}</td></tr></table>
-                            
-                            <button class="btn-print" onclick="window.print()">Download Premium Marksheet (PDF)</button>
-
-                            <!-- Hidden PDF Logic -->
+                            <!-- Hidden PDF Logic (Stretches to 1 page via print CSS) -->
                             <div class="pdf-container">
                                 <div class="pdf-header">
-                                    <img src="1000545194.webp" class="pdf-logo">
+                                    <img src="1000545194.webp" class="pdf-logo" onerror="this.src='https://via.placeholder.com/100'">
                                     <h1 class="pdf-title">Bayanul Uloom Suffa Dars</h1>
                                     <div style="font-size:15pt; color:#444;">Chemmankadav Kongayam, Malappuram</div>
-                                    <div style="margin-top:25px; font-weight:bold; font-size:18pt; border-bottom:2px solid var(--gold-accent); display:inline-block; padding:0 30px;">OFFICIAL RESULT - 2026</div>
+                                    <div style="margin-top:25px; font-weight:bold; font-size:18pt; border-bottom:2px solid var(--gold-accent); display:inline-block; padding:0 30px; padding-bottom:10px;">OFFICIAL RESULT - 2026</div>
                                 </div>
 
-                                <div style="margin: 40px 0;">
-                                    <h2 style="font-family:'Amiri'; font-size:32pt; color:var(--primary-green); margin:0;">${student.name}</h2>
-                                    <p style="font-size:14pt; color:#333;">Registration Number: <strong>${id}</strong></p>
+                                <div style="margin: 20px 0;">
+                                    <h2>${student.name}</h2>
+                                    <p style="font-size:14pt; color:#333; margin-top: 5px;">Registration Number: <strong>${id}</strong></p>
                                 </div>
 
-                                <table style="width:85%; margin:0 auto; font-size:14pt;">
-                                    ${rows}
-                                    <tr style="border-top:3px solid #333; font-size:18pt;"><td style="font-weight:bold;">GRAND TOTAL</td><td class="val">${total}</td></tr>
-                                </table>
+                                <div class="table-wrapper">
+                                    <table>
+                                        ${rows}
+                                        <tr style="border-top:3px solid #333; font-size:18pt;"><td style="font-weight:bold;">GRAND TOTAL</td><td class="val">${total}</td></tr>
+                                    </table>
+                                </div>
 
                                 <div class="signature-box">
                                     <img src="Sign01.png" class="sig-img" onerror="this.style.display='none'">
@@ -455,16 +540,32 @@ font-size:15pt;
                                     <div style="font-size:11pt; color:#555; letter-spacing:1px; margin-top:5px;">PRINCIPAL</div>
                                 </div>
                             </div>
+
                         </div>
                     `;
+                    
+                    // Scroll to result on mobile slightly
+                    if(window.innerWidth < 900) {
+                        setTimeout(() => out.scrollIntoView({behavior: 'smooth', block: 'start'}), 100);
+                    }
+                    
                 } else {
-                    out.innerHTML = `<div class="card" style="text-align:center; color:#e74c3c; font-weight:600;">⚠️ Registration ID not found in ledger.</div>`;
+                    out.innerHTML = `
+                        <div class="card" style="text-align:center; animation: slideUp 0.3s ease;">
+                            <div style="background:#fee2e2; color:#ef4444; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 15px;">
+                                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                            </div>
+                            <h3 style="margin:0 0 10px; color:#ef4444;">Record Not Found</h3>
+                            <p style="color:var(--text-muted); margin:0;">Registration ID <strong>${id}</strong> does not exist in the current ledger.</p>
+                        </div>`;
                 }
             }, 800);
         }
     </script>
     <style>
-        @keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes slideUp { from { opacity:0; transform:translateY(30px) scale(0.98); } to { opacity:1; transform:translateY(0) scale(1); } }
     </style>
 </body>
 </html>
+
+
