@@ -214,8 +214,8 @@
             .p-table { width: 100%; border-collapse: collapse; margin: 30px 0; font-size: 14pt; }
             .p-table td, .p-table th { border: 1px solid #000; padding: 10px; text-align: left; }
             .p-total { background: #eee !important; font-weight: bold; }
-            .p-sig { margin-top: 50px; text-align: right; }
-            .p-sig-name { font-weight: 700; border-top: 1px solid #000; display: inline-block; padding-top: 5px; min-width: 200px; font-size: 14pt; font-family: 'Playfair Display'; }
+            .p-sig { margin-top: 80px; text-align: center; }
+            .p-sig-name { font-weight: 700; border-top: 1px solid #000; display: padding-top: 5px; min-width: 200px; font-size: 14pt; font-family: 'Playfair Display'; }
         }
 
         #loader { display: none; text-align: center; padding: 40px 0; }
@@ -234,7 +234,7 @@
             </div>
             <div class="header-text">
                 <h1>Bayanul Uloom Suffa Dars</h1>
-                <p>Chemmankadav Kongayam, Malappuram</p>
+                <p>Chemmankadav, Kongayam, Malappuram</p>
             </div>
         </div>
     </header>
@@ -298,38 +298,39 @@
         }, { passive: true });
 
         const students = {
-            "3251":{name:"Muhammed Javad",mahalli:35,Hulasa:35,SA:30,VIVA:35},
-            "3253":{name:"Muhammed Fasil",Umdhah:44,Thuhfa:35,SA:50,VIVA:50},
-            "3254":{name:"Muhammed Jabir",Umdhah:59,Thuhfa:35,SA:0,VIVA:0},
-            "3255":{name:"Muhammed Riswan",Umdhah:58,Thuhfa:35,SA:50,VIVA:50},
-            "3256":{name:"Muhammed Afreed",Umdhah:35,Thuhfa:35,SA:50,VIVA:35},
-            "3257":{name:"Sharaf Ali",Umdhah:35,Thuhfa:35,SA:50,VIVA:40},
-            "3258":{name:"Muhammed Jinan",Umdhah:35,Thuhfa:35,SA:30,VIVA:20},
-            "3259":{name:"Muhammed Risan",Umdhah:35,Thuhfa:35,SA:50,VIVA:40},
-            "3260":{name:"Muhammed Ashfaq",Noorulabsar:43,Awamil:60,SA:30,VIVA:20},
-            "3261":{name:"Muhammed Aflah",Noorulabsar:35,Awamil:60,SA:30,VIVA:30},
-            "3262":{name:"Muhammed Jasheer",Noorulabsar:35,Awamil:35,SA:50,VIVA:15},
-            "3263":{name:"Muhammed Adnan",Noorulabsar:35,Awamil:40,SA:40,VIVA:35},
-            "3264":{name:"Razi",Noorulabsar:35,Awamil:60,SA:45,VIVA:10},
-            "3265":{name:"Muhammed Shahid",Noorulabsar:43,Awamil:68,SA:25,VIVA:30},
-            "3266":{name:"Muhammed Jaseer",Noorulabsar:40,Awamil:55,SA:30,VIVA:30},
-            "3267":{name:"Muhammed Irshad",Noorulabsar:35,Awamil:51,SA:50,VIVA:20},
-            "3268":{name:"Muhammed Shamil",Noorulabsar:50,Awamil:62,SA:50,VIVA:30},
-            "3269":{name:"Fahin sha",Noorulabsar:35,Meezan:40,SA:50,VIVA:40},
-            "3270":{name:"Ameen Farhan",Noorulabsar:35,Meezan:36,SA:50,VIVA:30},
-            "3271":{name:"Zahmil Ishan",Noorulabsar:35,Meezan:43,SA:30,VIVA:20},
-            "3272":{name:"Muhammed Anas",Noorulabsar:35,Meezan:47,SA:50,VIVA:30},
-            "3273":{name:"Muhammed Nabeel",Noorulabsar:45,Meezan:80,SA:50,VIVA:50},
-            "3274":{name:"Muhammed Dujoom",Noorulabsar:44,Meezan:72,SA:50,VIVA:30},
-            "3275":{name:"Muhammed Aslah",Noorulabsar:10,Meezan:35,SA:20,VIVA:20},
-            "3276":{name:"Muhammed Uvais",Noorulabsar:10,Meezan:35,SA:50,VIVA:20},
-            "3277":{name:"Muhammed Raseel",Noorulabsar:10,Meezan:35,SA:25,VIVA:20},
-            "3278":{name:"Razin Shahan",Noorulabsar:10,Meezan:43,SA:30,VIVA:20},
-            "3279":{name:"Muhammed Sahal",Noorulabsar:35,Meezan:60,SA:50,VIVA:50},
-            "3280":{name:"Muhammed Niyas",Noorulabsar:10,Meezan:35,SA:20,VIVA:20},
-            "3281":{name:"Zainul Abid",Noorulabsar:45,Meezan:35,SA:25,VIVA:25},
-            "3282":{name:"Muhammed Shahmil",Noorulabsar:35,Meezan:35,SA:25,VIVA:30},
-            "3283":{name:"Muhammed Arshad",Noorulabsar:35,Meezan:35,SA:25,VIVA:30}
+            "3251":{name:"Muhammed Javad",المحلي:35,خلاصة:35,SA:30,VIVA:35},
+            "3252":{name:"Muhammed Sideeque",المحلي:0(A),خلاصة:0(A),SA:0(A),VIVA:0(A)},
+            "3253":{name:"Muhammed Fasil",عمدة:44,تحفة الوردية:35,SA:50,VIVA:50},
+            "3254":{name:"Muhammed Jabir",عمدة:59,تحفة الوردية:35,SA:0,VIVA:0},
+            "3255":{name:"Muhammed Riswan",عمدة:58,تحفة الوردية:35,SA:50,VIVA:50},
+            "3256":{name:"Muhammed Afreed",عمدة:35,تحفة الوردية:35,SA:50,VIVA:35},
+            "3257":{name:"Sharaf Ali",عمدة:35,تحفة الوردية:35,SA:50,VIVA:40},
+            "3258":{name:"Muhammed Jinan",عمدة:35,تحفة الوردية:35,SA:30,VIVA:20},
+            "3259":{name:"Muhammed Risan",عمدة:35,تحفة الوردية:35,SA:50,VIVA:40},
+            "3260":{name:"Muhammed Ashfaq",نور الأبصار:43,العوامل:60,SA:30,VIVA:20},
+            "3261":{name:"Muhammed Aflah",نور الأبصار:35,العوامل:60,SA:30,VIVA:30},
+            "3262":{name:"Muhammed Jasheer",نور الأبصار:35,العوامل:35,SA:50,VIVA:15},
+            "3263":{name:"Muhammed Adnan",نور الأبصار:35,العوامل:40,SA:40,VIVA:35},
+            "3264":{name:"Razi",نور الأبصار:35,العوامل:60,SA:45,VIVA:10},
+            "3265":{name:"Muhammed Shahid",نور الأبصار:43,العوامل:68,SA:25,VIVA:30},
+            "3266":{name:"Muhammed Jaseer",نور الأبصار:40,العوامل:55,SA:30,VIVA:30},
+            "3267":{name:"Muhammed Irshad",نور الأبصار:35,العوامل:51,SA:50,VIVA:20},
+            "3268":{name:"Muhammed Shamil",نور الأبصار:50,العوامل:62,SA:50,VIVA:30},
+            "3269":{name:"Fahin sha",نور الأبصار:35,الميزان:40,SA:50,VIVA:40},
+            "3270":{name:"Ameen Farhan",نور الأبصار:35,الميزان:36,SA:50,VIVA:30},
+            "3271":{name:"Zahmil Ishan",نور الأبصار:35,الميزان:43,SA:30,VIVA:20},
+            "3272":{name:"Muhammed Anas",نور الأبصار:35,الميزان:47,SA:50,VIVA:30},
+            "3273":{name:"Muhammed Nabeel",نور الأبصار:45,الميزان:80,SA:50,VIVA:50},
+            "3274":{name:"Muhammed Dujoom",نور الأبصار:44,الميزان:72,SA:50,VIVA:30},
+            "3275":{name:"Muhammed Aslah",نور الأبصار:10,الميزان:35,SA:20,VIVA:20},
+            "3276":{name:"Muhammed Uvais",نور الأبصار:10,الميزان:35,SA:50,VIVA:20},
+            "3277":{name:"Muhammed Raseel",نور الأبصار:10,الميزان:35,SA:25,VIVA:20},
+            "3278":{name:"Razin Shahan",نور الأبصار:10,الميزان:43,SA:30,VIVA:20},
+            "3279":{name:"Muhammed Sahal",نور الأبصار:35,الميزان:60,SA:50,VIVA:50},
+            "3280":{name:"Muhammed Niyas",نور الأبصار:10,الميزان:35,SA:20,VIVA:20},
+            "3281":{name:"Zainul Abid",نور الأبصار:45,الميزان:35,SA:25,VIVA:25},
+            "3282":{name:"Muhammed Shahmil",نور الأبصار:35,الميزان:35,SA:25,VIVA:30},
+            "3283":{name:"Muhammed Arshad",نور الأبصار:35,الميزان:35,SA:25,VIVA:30}
         };
 
         function triggerSearch() {
@@ -361,7 +362,7 @@
                                 <thead><tr><th align="left">Subject</th><th align="right">Score</th></tr></thead>
                                 <tbody>${rows}<tr class="total-row"><td>TOTAL SCORE</td><td class="val">${total}</td></tr></tbody>
                             </table>
-                            <button class="btn btn-print" onclick="window.print()">Download Marksheet (Letter Size)</button>
+                            <button class="btn btn-print" onclick="window.print()">Print Result</button>
                         </div>
                     `;
 
