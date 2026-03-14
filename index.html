@@ -255,7 +255,7 @@
         /* PRINT STYLES */
         @media print {
             @page { margin: 1.5cm; }
-            header, .input-section, .btn-print, #loader { display: none !important; }
+            header, .input-section, .btn-print, #loader, #print-msg { display: none !important; }
             body { background: white !important; }
             .main-content { box-shadow: none; margin: 0 !important; max-width: 100%; padding: 0; }
             .result-card { border: 2px solid #0b6b3a; padding: 50px; border-radius: 0; }
@@ -319,7 +319,7 @@
     </div>
 
     <script>
-        // Updated Data Source
+        // Data Source
         const students = {
             "3251":{name:"Muhammed Javad",mahalli:35,Hulasa:35,SA:30,VIVA:35},
             "3252":{name:"Muhammed Sideeque",mahalli:0,Hulasa:0,SA:0,VIVA:0},
@@ -384,6 +384,27 @@
             }, 800);
         }
 
+        function triggerPrint() {
+            // Attempt standard print
+            try {
+                window.print();
+            } catch (err) {
+                console.log("Print blocked by iframe restrictions:", err);
+            }
+            
+            // Show message for iframe preview environments
+            const resDiv = document.getElementById("result");
+            if (!document.getElementById("print-msg")) {
+                const msgBox = document.createElement("div");
+                msgBox.id = "print-msg";
+                msgBox.style.cssText = "color: #e74c3c; text-align: center; margin-top: 15px; font-size: 0.85rem; padding: 10px; background: #fdf0ed; border-radius: 8px;";
+                msgBox.innerHTML = "If the print dialog didn't open automatically, please <b>save this page as an .html file</b> and open it in Chrome/Safari, or press <b>Ctrl+P / Cmd+P</b> on your keyboard.";
+                
+                const resultCard = document.querySelector(".result-card");
+                if (resultCard) resultCard.appendChild(msgBox);
+            }
+        }
+
         function searchResult() {
             const resDiv = document.getElementById("result");
             const regNo = regInput.value.trim();
@@ -396,7 +417,9 @@
                 // Loop through keys to find subjects (skipping the "name" key)
                 Object.keys(student).forEach(key => {
                     if (key !== "name") {
-                        rowsHtml += `<tr><td>${key}</td><td style="text-align: right;">${student[key]}</td></tr>`;
+                        // Format the key to capitalize the first letter for display
+                        let displayKey = key.charAt(0).toUpperCase() + key.slice(1);
+                        rowsHtml += `<tr><td>${displayKey}</td><td style="text-align: right;">${student[key]}</td></tr>`;
                         grandTotal += Number(student[key]);
                     }
                 });
@@ -430,8 +453,8 @@
                             <div class="sig-line">Muhammed Saneer Faizy Wayanad</div>
                         </div>
 
-                        <button class="btn-print" onclick="window.print()">
-                            Print Official Marksheet
+                        <button class="btn-print" onclick="triggerPrint()">
+                            🖨️ Print Official Marksheet
                         </button>
                     </div>
                 `;
