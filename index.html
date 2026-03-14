@@ -58,10 +58,6 @@
             transition: all var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        .header-text {
-            transition: all var(--transition-speed) ease;
-        }
-
         header h1 {
             font-family: 'Amiri', serif;
             margin: 10px 0 5px;
@@ -79,7 +75,7 @@
             transition: all var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* FIXED GLIDE: Full details remain visible at top left */
+        /* FIXED GLIDE: Full details at top left */
         body.is-focused header {
             padding: 15px 40px;
             text-align: left;
@@ -107,7 +103,6 @@
         body.is-focused header p {
             font-size: 0.95rem;
             opacity: 1;
-            visibility: visible;
         }
 
         /* Main Container */
@@ -147,7 +142,6 @@
             box-sizing: border-box;
             transition: all 0.3s;
             text-align: center;
-            background-color: #fcfdfc;
         }
 
         input:focus {
@@ -178,8 +172,8 @@
         }
 
         .spinner {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             border: 4px solid rgba(11, 107, 58, 0.1);
             border-top: 4px solid var(--primary-green);
             border-radius: 50%;
@@ -221,8 +215,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 25px;
-            margin-top: 15px;
+            margin: 20px 0;
         }
 
         th, td {
@@ -260,17 +253,39 @@
 
         /* PRINT STYLES */
         @media print {
+            @page { margin: 1.5cm; }
             header, .input-section, .btn-print, #loader { display: none !important; }
+            body { background: white !important; }
             .main-content { box-shadow: none; margin: 0 !important; max-width: 100%; padding: 0; }
-            .result-card { border: 2px solid #0b6b3a; padding: 40px; }
-            .print-header { display: block !important; text-align: center; margin-bottom: 40px; border-bottom: 3px double var(--gold-accent); padding-bottom: 20px; }
-            .print-logo { width: 100px; height: 100px; margin-bottom: 10px; }
-            .print-title { font-family: 'Amiri', serif; font-size: 26pt; color: #0b6b3a; margin: 0; }
-            .footer-signature { display: flex !important; justify-content: space-between; margin-top: 80px; }
-            .sig-box { text-align: center; width: 180px; border-top: 1.5px solid #000; padding-top: 8px; }
+            .result-card { border: 2px solid #0b6b3a; padding: 50px; border-radius: 0; }
+            
+            .print-header { 
+                display: block !important; 
+                text-align: center; 
+                margin-bottom: 40px; 
+                border-bottom: 3px double var(--gold-accent); 
+                padding-bottom: 25px; 
+            }
+            .print-logo { width: 110px; height: 110px; margin-bottom: 15px; }
+            .print-title { font-family: 'Amiri', serif; font-size: 28pt; color: #0b6b3a; margin: 0; }
+            
+            .footer-signature-centered { 
+                display: block !important; 
+                text-align: center; 
+                margin-top: 100px; 
+            }
+            .sig-line {
+                display: inline-block;
+                width: 280px;
+                border-top: 1.5px solid #000;
+                padding-top: 10px;
+                font-family: 'Amiri', serif;
+                font-size: 14pt;
+                font-weight: bold;
+            }
         }
 
-        .print-header, .footer-signature { display: none; }
+        .print-header, .footer-signature-centered { display: none; }
     </style>
 </head>
 <body>
@@ -296,7 +311,7 @@
 
         <div id="loader">
             <div class="spinner"></div>
-            <p style="color: var(--primary-green); font-size: 0.9rem;">Fetching records...</p>
+            <p style="color: var(--primary-green); font-size: 0.8rem; margin-top: 10px;">Verifying credentials...</p>
         </div>
 
         <div id="result"></div>
@@ -309,12 +324,7 @@
             "3253":{name:"Abdul Rahman",quran:90,fiqh:85,aqeedah:92,arabic:88},
             "3254":{name:"Sayyed Ali",quran:78,fiqh:81,aqeedah:75,arabic:77},
             "3255":{name:"Ibrahim Khalid",quran:69,fiqh:72,aqeedah:70,arabic:73},
-            "3256":{name:"Umar Farooq",quran:82,fiqh:79,aqeedah:85,arabic:80},
-            "3257":{name:"Hassan Basri",quran:74,fiqh:71,aqeedah:76,arabic:72},
-            "3258":{name:"Usman Ghani",quran:66,fiqh:69,aqeedah:70,arabic:68},
-            "3259":{name:"Zaid Bin Thabit",quran:88,fiqh:84,aqeedah:82,arabic:86},
-            "3260":{name:"Bilal Habashi",quran:72,fiqh:70,aqeedah:73,arabic:75},
-            "3261":{name:"Zaid",quran:100,fiqh:100,aqeedah:100,arabic:100}
+            "3261":{name:"Zaid Bin Thabit",quran:98,fiqh:95,aqeedah:100,arabic:92}
         };
 
         const regInput = document.getElementById("reg");
@@ -336,14 +346,9 @@
         function triggerSearch() {
             const resDiv = document.getElementById("result");
             const loader = document.getElementById("loader");
-            
-            // Clear previous result
             resDiv.innerHTML = "";
-            
-            // Show loader
             loader.style.display = "block";
             
-            // Artificial delay for the loading effect
             setTimeout(() => {
                 loader.style.display = "none";
                 searchResult();
@@ -357,27 +362,26 @@
 
             if(student) {
                 const total = student.quran + student.fiqh + student.aqeedah + student.arabic;
-                const percentage = ((total / 400) * 100).toFixed(1);
                 
                 resDiv.innerHTML = `
                     <div class="result-card">
                         <div class="print-header">
                             <img src="1000545194.webp" class="print-logo" alt="Logo">
                             <div class="print-title">Bayanul Uloom Suffa Dars</div>
-                            <div style="font-size: 15pt;">Chemmankadav Kongayam</div>
-                            <div style="font-size: 13pt; margin-top: 8px; font-weight: bold;">Annual Examination Marksheet - 2024</div>
+                            <div style="font-size: 16pt;">Chemmankadav Kongayam</div>
+                            <div style="font-size: 14pt; margin-top: 10px; font-weight: bold; color: #0b6b3a;">Annual Examination Marksheet - 2026</div>
                         </div>
 
                         <h3 class="student-name">${student.name}</h3>
-                        <p style="text-align:center; color:#777; font-size:0.9rem;">Register No: ${regNo}</p>
+                        <p style="text-align:center; color:#777; font-size:1rem; margin-top:0;">Reg No: ${regNo}</p>
                         
                         <table>
                             <thead>
-                                <tr><th>Subject</th><th style="text-align: right;">Marks</th></tr>
+                                <tr><th>Subject Name</th><th style="text-align: right;">Marks</th></tr>
                             </thead>
                             <tbody>
                                 <tr><td>Holy Quran</td><td style="text-align: right;">${student.quran}</td></tr>
-                                <tr><td>Fiqh (Jurisprudence)</td><td style="text-align: right;">${student.fiqh}</td></tr>
+                                <tr><td>Fiqh (Islamic Law)</td><td style="text-align: right;">${student.fiqh}</td></tr>
                                 <tr><td>Aqeedah (Theology)</td><td style="text-align: right;">${student.aqeedah}</td></tr>
                                 <tr><td>Arabic Language</td><td style="text-align: right;">${student.arabic}</td></tr>
                                 <tr class="total-row">
@@ -387,18 +391,17 @@
                             </tbody>
                         </table>
 
-                        <div class="footer-signature">
-                            <div class="sig-box">Class Teacher</div>
-                            <div class="sig-box">Principal Signature</div>
+                        <div class="footer-signature-centered">
+                            <div class="sig-line">Muhammed Saneer Faizy Wayanad</div>
                         </div>
 
                         <button class="btn-print" onclick="window.print()">
-                            Print Official Result
+                            Print Official Marksheet
                         </button>
                     </div>
                 `;
             } else {
-                resDiv.innerHTML = `<p style="color:red; text-align:center; font-weight:bold;">Student not found. Please try again.</p>`;
+                resDiv.innerHTML = `<p style="color:#e74c3c; text-align:center; font-weight:bold; padding:20px;">Register number not found. Please try again.</p>`;
             }
         }
     </script>
