@@ -75,7 +75,7 @@
             transition: all var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* FIXED GLIDE: Full details at top left */
+        /* Glide Effect: Header moves to top left on focus */
         body.is-focused header {
             padding: 15px 40px;
             text-align: left;
@@ -249,6 +249,7 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
+            margin-top: 20px;
         }
 
         /* PRINT STYLES */
@@ -304,7 +305,7 @@
 
     <div class="main-content">
         <div class="input-section">
-            <label for="reg">Result Portal</label>
+            <label for="reg">Examination Portal</label>
             <input type="text" id="reg" placeholder="Enter Register Number" autocomplete="off">
             <button class="btn-search" onclick="triggerSearch()">Search Result</button>
         </div>
@@ -318,40 +319,41 @@
     </div>
 
     <script>
+        // Updated Data Source
         const students = {
             "3251":{name:"Muhammed Javad",mahalli:35,Hulasa:35,SA:30,VIVA:35},
-"3252":{name:"Muhammed Sideeque",mahalli:0,Hulasa:0,SA:0,VIVA:0},
-"3253":{name:"Muhammed Fasil",Umdhah:44,Thuhfa:35,SA:50,VIVA:50},
-"3254":{name:"Muhammed Jabir",Umdhah:59,Thuhfa:35,SA:0,VIVA:0},
-"3255":{name:"Muhammed Riswan",Umdhah:58,Thuhfa:35,SA:50,VIVA:50},
-"3256":{name:"Muhammed Afreed",Umdhah:35,Thuhfa:35,SA:50,VIVA:35},
-"3257":{name:"Sharaf Ali",Umdhah:35,Thuhfa:35,SA:50,VIVA:40},
-"3258":{name:"Muhammed Jinan",Umdhah:35,Thuhfa:35,SA:30,VIVA:20},
-"3259":{name:"Muhammed Risan",Umdhah:35,Thuhfa:35,SA:50,VIVA:40},
-"3260":{name:"Muhammed Ashfaq",Noorulabsar:43,Awamil:60,SA:30,VIVA:20},
-"3261":{name:"Muhammed Aflah",Noorulabsar:35,Awamil:60,SA:30,VIVA:30},
-"3262":{name:"Muhammed Jasheer",Noorulabsar:35,Awamil:35,SA:50,VIVA:15},
-"3263":{name:"Muhammed Adnan",Noorulabsar:35,Awamil:40,SA:40,VIVA:35},
-"3264":{name:"Razi",Noorulabsar:35,Awamil:60,SA:45,VIVA:10},
-"3265":{name:"Muhammed Shahid",Noorulabsar:43,Awamil:68,SA:25,VIVA:30},
-"3266":{name:"Muhammed Jaseer",Noorulabsar:40,Awamil:55,SA:30,VIVA:30},
-"3267":{name:"Muhammed Irshad",Noorulabsar:35,Awamil:51,SA:50,VIVA:20},
-"3268":{name:"Muhammed Shamil",Noorulabsar:50,Awamil:62,SA:50,VIVA:30},
-"3269":{name:"Fahin sha",Noorulabsar:35,Meezan:40,SA:50,VIVA:40},
-"3270":{name:"Ameen Farhan",Noorulabsar:35,Meezan:36,SA:50,VIVA:30},
-"3271":{name:"Zahmil Ishan",Noorulabsar:35,Meezan:43,SA:30,VIVA:20},
-"3272":{name:"Muhammed Anas",Noorulabsar:35,Meezan:47,SA:50,VIVA:30},
-"3273":{name:"Muhammed Nabeel",Noorulabsar:45,Meezan:80,SA:50,VIVA:50},
-"3274":{name:"Muhammed Dujoom",Noorulabsar:44,Meezan:72,SA:50,VIVA:30},
-"3275":{name:"Muhammed Aslah",Noorulabsar:10,Meezan:35,SA:20,VIVA:20},
-"3276":{name:"Muhammed Uvais",Noorulabsar:10,Meezan:35,SA:50,VIVA:20},
-"3277":{name:"Muhammed Raseel",Noorulabsar:10,Meezan:35,SA:25,VIVA:20},
-"3278":{name:"Razin Shahan",Noorulabsar:10,Meezan:43,SA:30,VIVA:20},
-"3279":{name:"Muhammed Sahal",Noorulabsar:35,Meezan:60,SA:50,VIVA:50},
-"3280":{name:"Muhammed Niyas",Noorulabsar:10,Meezan:35,SA:20,VIVA:20},
-"3281":{name:"Zainul Abid",Noorulabsar:45,Meezan:35,SA:25,VIVA:25},
-"3282":{name:"Muhammed Shahmil",Noorulabsar:35,Meezan:35,SA:25,VIVA:30},
-"3283":{name:"Muhammed Arshad",Noorulabsar:35,Meezan:35,SA:25,VIVA:30}
+            "3252":{name:"Muhammed Sideeque",mahalli:0,Hulasa:0,SA:0,VIVA:0},
+            "3253":{name:"Muhammed Fasil",Umdhah:44,Thuhfa:35,SA:50,VIVA:50},
+            "3254":{name:"Muhammed Jabir",Umdhah:59,Thuhfa:35,SA:0,VIVA:0},
+            "3255":{name:"Muhammed Riswan",Umdhah:58,Thuhfa:35,SA:50,VIVA:50},
+            "3256":{name:"Muhammed Afreed",Umdhah:35,Thuhfa:35,SA:50,VIVA:35},
+            "3257":{name:"Sharaf Ali",Umdhah:35,Thuhfa:35,SA:50,VIVA:40},
+            "3258":{name:"Muhammed Jinan",Umdhah:35,Thuhfa:35,SA:30,VIVA:20},
+            "3259":{name:"Muhammed Risan",Umdhah:35,Thuhfa:35,SA:50,VIVA:40},
+            "3260":{name:"Muhammed Ashfaq",Noorulabsar:43,Awamil:60,SA:30,VIVA:20},
+            "3261":{name:"Muhammed Aflah",Noorulabsar:35,Awamil:60,SA:30,VIVA:30},
+            "3262":{name:"Muhammed Jasheer",Noorulabsar:35,Awamil:35,SA:50,VIVA:15},
+            "3263":{name:"Muhammed Adnan",Noorulabsar:35,Awamil:40,SA:40,VIVA:35},
+            "3264":{name:"Razi",Noorulabsar:35,Awamil:60,SA:45,VIVA:10},
+            "3265":{name:"Muhammed Shahid",Noorulabsar:43,Awamil:68,SA:25,VIVA:30},
+            "3266":{name:"Muhammed Jaseer",Noorulabsar:40,Awamil:55,SA:30,VIVA:30},
+            "3267":{name:"Muhammed Irshad",Noorulabsar:35,Awamil:51,SA:50,VIVA:20},
+            "3268":{name:"Muhammed Shamil",Noorulabsar:50,Awamil:62,SA:50,VIVA:30},
+            "3269":{name:"Fahin sha",Noorulabsar:35,Meezan:40,SA:50,VIVA:40},
+            "3270":{name:"Ameen Farhan",Noorulabsar:35,Meezan:36,SA:50,VIVA:30},
+            "3271":{name:"Zahmil Ishan",Noorulabsar:35,Meezan:43,SA:30,VIVA:20},
+            "3272":{name:"Muhammed Anas",Noorulabsar:35,Meezan:47,SA:50,VIVA:30},
+            "3273":{name:"Muhammed Nabeel",Noorulabsar:45,Meezan:80,SA:50,VIVA:50},
+            "3274":{name:"Muhammed Dujoom",Noorulabsar:44,Meezan:72,SA:50,VIVA:30},
+            "3275":{name:"Muhammed Aslah",Noorulabsar:10,Meezan:35,SA:20,VIVA:20},
+            "3276":{name:"Muhammed Uvais",Noorulabsar:10,Meezan:35,SA:50,VIVA:20},
+            "3277":{name:"Muhammed Raseel",Noorulabsar:10,Meezan:35,SA:25,VIVA:20},
+            "3278":{name:"Razin Shahan",Noorulabsar:10,Meezan:43,SA:30,VIVA:20},
+            "3279":{name:"Muhammed Sahal",Noorulabsar:35,Meezan:60,SA:50,VIVA:50},
+            "3280":{name:"Muhammed Niyas",Noorulabsar:10,Meezan:35,SA:20,VIVA:20},
+            "3281":{name:"Zainul Abid",Noorulabsar:45,Meezan:35,SA:25,VIVA:25},
+            "3282":{name:"Muhammed Shahmil",Noorulabsar:35,Meezan:35,SA:25,VIVA:30},
+            "3283":{name:"Muhammed Arshad",Noorulabsar:35,Meezan:35,SA:25,VIVA:30}
         };
 
         const regInput = document.getElementById("reg");
@@ -388,8 +390,17 @@
             const student = students[regNo];
 
             if(student) {
-                const total = student.quran + student.fiqh + student.aqeedah + student.arabic;
-                
+                let rowsHtml = "";
+                let grandTotal = 0;
+
+                // Loop through keys to find subjects (skipping the "name" key)
+                Object.keys(student).forEach(key => {
+                    if (key !== "name") {
+                        rowsHtml += `<tr><td>${key}</td><td style="text-align: right;">${student[key]}</td></tr>`;
+                        grandTotal += Number(student[key]);
+                    }
+                });
+
                 resDiv.innerHTML = `
                     <div class="result-card">
                         <div class="print-header">
@@ -407,13 +418,10 @@
                                 <tr><th>Subject Name</th><th style="text-align: right;">Marks</th></tr>
                             </thead>
                             <tbody>
-                                <tr><td>Holy Quran</td><td style="text-align: right;">${student.quran}</td></tr>
-                                <tr><td>Fiqh (Islamic Law)</td><td style="text-align: right;">${student.fiqh}</td></tr>
-                                <tr><td>Aqeedah (Theology)</td><td style="text-align: right;">${student.aqeedah}</td></tr>
-                                <tr><td>Arabic Language</td><td style="text-align: right;">${student.arabic}</td></tr>
+                                ${rowsHtml}
                                 <tr class="total-row">
                                     <td>GRAND TOTAL</td>
-                                    <td style="text-align: right;">${total} / 400</td>
+                                    <td style="text-align: right;">${grandTotal}</td>
                                 </tr>
                             </tbody>
                         </table>
