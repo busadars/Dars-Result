@@ -14,13 +14,6 @@
             --bg: #f4f7f5;
             --text: #1e293b;
             --border: #e2e8f0;
-            --header-h: 220px;
-            --logo-s: 100px;
-        }
-
-        body.is-scrolled {
-            --header-h: 70px;
-            --logo-s: 45px;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -31,7 +24,13 @@
             margin: 0;
             color: var(--text);
             line-height: 1.5;
-            padding-top: var(--header-h); /* Prevent content jump */
+            /* Hardcoded padding for smooth transition */
+            padding-top: 220px; 
+            transition: padding-top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.is-scrolled {
+            padding-top: 70px;
         }
 
         /* --- ATTRACTIVE GLIDE HEADER --- */
@@ -42,12 +41,9 @@
             top: 0;
             left: 0;
             right: 0;
-            height: var(--header-h);
+            height: 220px; /* Starting height */
             z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s;
+            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
             border-bottom: 4px solid var(--accent);
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
@@ -63,26 +59,21 @@
             pointer-events: none;
         }
 
+        /* Absolute positioning for a true, flawless glide */
         .header-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
             max-width: 1200px;
-            width: 100%;
-        }
-
-        body.is-scrolled .header-content {
-            flex-direction: row;
-            padding: 0 20px;
-            justify-content: flex-start;
-            gap: 20px;
+            margin: 0 auto;
+            height: 100%;
         }
 
         .logo-box {
-            width: var(--logo-s);
-            height: var(--logo-s);
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
             background: white;
             border-radius: 50%;
             padding: 4px;
@@ -100,8 +91,15 @@
             border-radius: 50%;
         }
 
-        .header-text { text-align: center; transition: all 0.4s; }
-        body.is-scrolled .header-text { text-align: left; }
+        .header-text {
+            position: absolute;
+            top: 145px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            width: 90%;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
         .header-text h1 {
             font-family: 'Playfair Display', serif;
@@ -109,9 +107,8 @@
             font-size: clamp(1.2rem, 5vw, 2.2rem);
             font-weight: 900;
             letter-spacing: -0.5px;
+            transition: font-size 0.4s;
         }
-
-        body.is-scrolled .header-text h1 { font-size: 1.3rem; }
 
         .header-text p {
             margin: 0;
@@ -119,8 +116,32 @@
             opacity: 0.9;
             font-weight: 300;
             letter-spacing: 1px;
+            transition: font-size 0.4s;
         }
-        body.is-scrolled .header-text p { font-size: 0.75rem; }
+
+        /* --- THE GLIDE STATE --- */
+        body.is-scrolled header { height: 70px; }
+        
+        body.is-scrolled .logo-box {
+            top: 10px;
+            left: 20px;
+            transform: translateX(0); /* Removes center alignment */
+            width: 45px;
+            height: 45px;
+            border-width: 1px;
+        }
+
+        body.is-scrolled .header-text {
+            top: 15px;
+            left: 80px;
+            transform: translateX(0);
+            text-align: left;
+            width: calc(100% - 100px);
+        }
+
+        body.is-scrolled .header-text h1 { font-size: 1.2rem; }
+        body.is-scrolled .header-text p { font-size: 0.7rem; }
+
 
         /* --- MAIN LAYOUT --- */
         .wrapper {
@@ -215,7 +236,7 @@
             .p-table td, .p-table th { border: 1px solid #000; padding: 10px; text-align: left; }
             .p-total { background: #eee !important; font-weight: bold; }
             .p-sig { margin-top: 80px; text-align: center; }
-            .p-sig-name { font-weight: 700; border-top: 1px solid #000; display: padding-top: 5px; min-width: 200px; font-size: 14pt; font-family: 'Playfair Display'; }
+            .p-sig-name { font-weight: 700; border-top: 1px solid #000; padding-top: 5px; min-width: 200px; display: inline-block; font-size: 14pt; font-family: 'Playfair Display'; }
         }
 
         #loader { display: none; text-align: center; padding: 40px 0; }
@@ -244,9 +265,10 @@
             <div class="card">
                 <div class="input-group">
                     <label>Registration Number</label>
-                    <input type="tel" id="regNo" placeholder="Enter Register No" onkeypress="if(event.key==='Enter') triggerSearch()">
+                    <input type="tel" id="regNo" placeholder="Enter Register No" onkeypress="if(event.key==='Enter') { event.preventDefault(); triggerSearch(); }">
                 </div>
-                <button class="btn" onclick="triggerSearch()">View Result</button>
+                <!-- Changed to type="button" to prevent unwanted page reloads -->
+                <button type="button" class="btn" onclick="triggerSearch()">View Result</button>
             </div>
         </aside>
 
@@ -288,49 +310,52 @@
     </div>
 
     <script>
-        // High-performance scroll listener for the Glide Effect
-        window.addEventListener('scroll', () => {
+        // Solid check for scroll position to activate the glide
+        function checkScroll() {
             if (window.scrollY > 50) {
                 document.body.classList.add('is-scrolled');
             } else {
                 document.body.classList.remove('is-scrolled');
             }
-        }, { passive: true });
+        }
+        window.addEventListener('scroll', checkScroll, { passive: true });
+        window.addEventListener('load', checkScroll); // Check on page load too
 
+        // Wrapped all Arabic words in quotes. Without quotes, it breaks the website in many browsers!
         const students = {
-            "3251":{name:"Muhammed Javad",المحلي:35,خلاصة:35,SA:30,VIVA:35},
-            "3252":{name:"Muhammed Sideeque",المحلي:"0(A)",خلاصة:"0(A)",SA:"0 (A)",VIVA:"0 (A)"},
-            "3253":{name:"Muhammed Fasil",عمدة:44,تحفة الوردية:35,SA:50,VIVA:50},
-            "3254":{name:"Muhammed Jabir",عمدة:59,تحفة الوردية:35,SA:0,VIVA:0},
-            "3255":{name:"Muhammed Riswan",عمدة:58,تحفة الوردية:35,SA:50,VIVA:50},
-            "3256":{name:"Muhammed Afreed",عمدة:35,تحفة الوردية:35,SA:50,VIVA:35},
-            "3257":{name:"Sharaf Ali",عمدة:35,تحفة الوردية:35,SA:50,VIVA:40},
-            "3258":{name:"Muhammed Jinan",عمدة:35,تحفة الوردية:35,SA:30,VIVA:20},
-            "3259":{name:"Muhammed Risan",عمدة:35,تحفة الوردية:35,SA:50,VIVA:40},
-            "3260":{name:"Muhammed Ashfaq",نور الأبصار:43,العوامل:60,SA:30,VIVA:20},
-            "3261":{name:"Muhammed Aflah",نور الأبصار:35,العوامل:60,SA:30,VIVA:30},
-            "3262":{name:"Muhammed Jasheer",نور الأبصار:35,العوامل:35,SA:50,VIVA:15},
-            "3263":{name:"Muhammed Adnan",نور الأبصار:35,العوامل:40,SA:40,VIVA:35},
-            "3264":{name:"Razi",نور الأبصار:35,العوامل:60,SA:45,VIVA:10},
-            "3265":{name:"Muhammed Shahid",نور الأبصار:43,العوامل:68,SA:25,VIVA:30},
-            "3266":{name:"Muhammed Jaseer",نور الأبصار:40,العوامل:55,SA:30,VIVA:30},
-            "3267":{name:"Muhammed Irshad",نور الأبصار:35,العوامل:51,SA:50,VIVA:20},
-            "3268":{name:"Muhammed Shamil",نور الأبصار:50,العوامل:62,SA:50,VIVA:30},
-            "3269":{name:"Fahin sha",نور الأبصار:35,الميزان:40,SA:50,VIVA:40},
-            "3270":{name:"Ameen Farhan",نور الأبصار:35,الميزان:36,SA:50,VIVA:30},
-            "3271":{name:"Zahmil Ishan",نور الأبصار:35,الميزان:43,SA:30,VIVA:20},
-            "3272":{name:"Muhammed Anas",نور الأبصار:35,الميزان:47,SA:50,VIVA:30},
-            "3273":{name:"Muhammed Nabeel",نور الأبصار:45,الميزان:80,SA:50,VIVA:50},
-            "3274":{name:"Muhammed Dujoom",نور الأبصار:44,الميزان:72,SA:50,VIVA:30},
-            "3275":{name:"Muhammed Aslah",نور الأبصار:10,الميزان:35,SA:20,VIVA:20},
-            "3276":{name:"Muhammed Uvais",نور الأبصار:10,الميزان:35,SA:50,VIVA:20},
-            "3277":{name:"Muhammed Raseel",نور الأبصار:10,الميزان:35,SA:25,VIVA:20},
-            "3278":{name:"Razin Shahan",نور الأبصار:10,الميزان:43,SA:30,VIVA:20},
-            "3279":{name:"Muhammed Sahal",نور الأبصار:35,الميزان:60,SA:50,VIVA:50},
-            "3280":{name:"Muhammed Niyas",نور الأبصار:10,الميزان:35,SA:20,VIVA:20},
-            "3281":{name:"Zainul Abid",نور الأبصار:45,الميزان:35,SA:25,VIVA:25},
-            "3282":{name:"Muhammed Shahmil",نور الأبصار:35,الميزان:35,SA:25,VIVA:30},
-            "3283":{name:"Muhammed Arshad",نور الأبصار:35,الميزان:35,SA:25,VIVA:30}
+            "3251": {"name": "Muhammed Javad", "المحلي": 35, "خلاصة": 35, "SA": 30, "VIVA": 35},
+            "3252": {"name": "Muhammed Sideeque", "المحلي": "0(A)", "خلاصة": "0(A)", "SA": "0 (A)", "VIVA": "0 (A)"},
+            "3253": {"name": "Muhammed Fasil", "عمدة": 44, "تحفة الوردية": 35, "SA": 50, "VIVA": 50},
+            "3254": {"name": "Muhammed Jabir", "عمدة": 59, "تحفة الوردية": 35, "SA": 0, "VIVA": 0},
+            "3255": {"name": "Muhammed Riswan", "عمدة": 58, "تحفة الوردية": 35, "SA": 50, "VIVA": 50},
+            "3256": {"name": "Muhammed Afreed", "عمدة": 35, "تحفة الوردية": 35, "SA": 50, "VIVA": 35},
+            "3257": {"name": "Sharaf Ali", "عمدة": 35, "تحفة الوردية": 35, "SA": 50, "VIVA": 40},
+            "3258": {"name": "Muhammed Jinan", "عمدة": 35, "تحفة الوردية": 35, "SA": 30, "VIVA": 20},
+            "3259": {"name": "Muhammed Risan", "عمدة": 35, "تحفة الوردية": 35, "SA": 50, "VIVA": 40},
+            "3260": {"name": "Muhammed Ashfaq", "نور الأبصار": 43, "العوامل": 60, "SA": 30, "VIVA": 20},
+            "3261": {"name": "Muhammed Aflah", "نور الأبصار": 35, "العوامل": 60, "SA": 30, "VIVA": 30},
+            "3262": {"name": "Muhammed Jasheer", "نور الأبصار": 35, "العوامل": 35, "SA": 50, "VIVA": 15},
+            "3263": {"name": "Muhammed Adnan", "نور الأبصار": 35, "العوامل": 40, "SA": 40, "VIVA": 35},
+            "3264": {"name": "Razi", "نور الأبصار": 35, "العوامل": 60, "SA": 45, "VIVA": 10},
+            "3265": {"name": "Muhammed Shahid", "نور الأبصار": 43, "العوامل": 68, "SA": 25, "VIVA": 30},
+            "3266": {"name": "Muhammed Jaseer", "نور الأبصار": 40, "العوامل": 55, "SA": 30, "VIVA": 30},
+            "3267": {"name": "Muhammed Irshad", "نور الأبصار": 35, "العوامل": 51, "SA": 50, "VIVA": 20},
+            "3268": {"name": "Muhammed Shamil", "نور الأبصار": 50, "العوامل": 62, "SA": 50, "VIVA": 30},
+            "3269": {"name": "Fahin sha", "نور الأبصار": 35, "الميزان": 40, "SA": 50, "VIVA": 40},
+            "3270": {"name": "Ameen Farhan", "نور الأبصار": 35, "الميزان": 36, "SA": 50, "VIVA": 30},
+            "3271": {"name": "Zahmil Ishan", "نور الأبصار": 35, "الميزان": 43, "SA": 30, "VIVA": 20},
+            "3272": {"name": "Muhammed Anas", "نور الأبصار": 35, "الميزان": 47, "SA": 50, "VIVA": 30},
+            "3273": {"name": "Muhammed Nabeel", "نور الأبصار": 45, "الميزان": 80, "SA": 50, "VIVA": 50},
+            "3274": {"name": "Muhammed Dujoom", "نور الأبصار": 44, "الميزان": 72, "SA": 50, "VIVA": 30},
+            "3275": {"name": "Muhammed Aslah", "نور الأبصار": 10, "الميزان": 35, "SA": 20, "VIVA": 20},
+            "3276": {"name": "Muhammed Uvais", "نور الأبصار": 10, "الميزان": 35, "SA": 50, "VIVA": 20},
+            "3277": {"name": "Muhammed Raseel", "نور الأبصار": 10, "الميزان": 35, "SA": 25, "VIVA": 20},
+            "3278": {"name": "Razin Shahan", "نور الأبصار": 10, "الميزان": 43, "SA": 30, "VIVA": 20},
+            "3279": {"name": "Muhammed Sahal", "نور الأبصار": 35, "الميزان": 60, "SA": 50, "VIVA": 50},
+            "3280": {"name": "Muhammed Niyas", "نور الأبصار": 10, "الميزان": 35, "SA": 20, "VIVA": 20},
+            "3281": {"name": "Zainul Abid", "نور الأبصار": 45, "الميزان": 35, "SA": 25, "VIVA": 25},
+            "3282": {"name": "Muhammed Shahmil", "نور الأبصار": 35, "الميزان": 35, "SA": 25, "VIVA": 30},
+            "3283": {"name": "Muhammed Arshad", "نور الأبصار": 35, "الميزان": 35, "SA": 25, "VIVA": 30}
         };
 
         function triggerSearch() {
@@ -350,7 +375,12 @@
                     Object.keys(s).forEach(k => {
                         if(k !== 'name') {
                             rows += `<tr><td>${k.toUpperCase()}</td><td class="val">${s[k]}</td></tr>`;
-                            total += s[k];
+                            
+                            // Safe calculation for text like "0(A)"
+                            let score = parseInt(String(s[k]), 10);
+                            if (!isNaN(score)) {
+                                total += score;
+                            }
                         }
                     });
 
@@ -362,7 +392,7 @@
                                 <thead><tr><th align="left">Subject</th><th align="right">Score</th></tr></thead>
                                 <tbody>${rows}<tr class="total-row"><td>TOTAL SCORE</td><td class="val">${total}</td></tr></tbody>
                             </table>
-                            <button class="btn btn-print" onclick="window.print()">Print Result</button>
+                            <button type="button" class="btn btn-print" onclick="window.print()">Print Result</button>
                         </div>
                     `;
 
@@ -375,13 +405,17 @@
                         <tr class="p-total"><td>GRAND TOTAL</td><td style="text-align:right">${total}</td></tr>
                     `;
 
-                    if(window.innerWidth < 850) out.scrollIntoView({behavior:'smooth'});
+                    // Scroll down to result gracefully on mobile
+                    if(window.innerWidth < 850) {
+                        out.scrollIntoView({behavior:'smooth', block: 'center'});
+                    }
                 } else {
-                    out.innerHTML = `<div class="card fade-in" style="text-align:center; color:#ef4444;">ID Not Found.</div>`;
+                    out.innerHTML = `<div class="card fade-in" style="text-align:center; color:#ef4444; font-weight:bold;">Registration Number Not Found. Please check and try again.</div>`;
                 }
             }, 500);
         }
     </script>
 </body>
 </html>
+
 
