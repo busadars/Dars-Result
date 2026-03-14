@@ -9,8 +9,10 @@
 
         :root {
             --primary-green: #0b6b3a;
+            --secondary-green: #1fa463;
             --gold-accent: #c5a059;
             --dark-text: #2c3e50;
+            --transition-speed: 0.8s;
         }
 
         body {
@@ -19,166 +21,269 @@
             margin: 0;
             padding: 0;
             color: var(--dark-text);
+            overflow-x: hidden;
         }
 
-        /* --- UI COMPONENTS (Hidden during Print) --- */
+        /* --- GLIDE HEADER --- */
         header {
             background: linear-gradient(135deg, var(--primary-green), #064425);
             color: white;
-            padding: 40px 20px;
+            padding: 60px 20px;
             text-align: center;
             border-bottom: 5px solid var(--gold-accent);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            transition: all var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .logo-container img {
-            width: 100px;
-            height: 100px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
-            border: 3px solid white;
+            border: 4px solid white;
             background: white;
-            margin-bottom: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+            transition: all var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        header h1 { font-family: 'Amiri', serif; margin: 5px 0; font-size: 2.2rem; }
+        header h1 {
+            font-family: 'Amiri', serif;
+            margin: 10px 0 5px;
+            font-size: 2.8rem;
+            letter-spacing: 1px;
+            line-height: 1.2;
+            transition: all var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
+        }
 
+        header p {
+            margin: 0;
+            font-weight: 300;
+            opacity: 0.9;
+            font-size: 1.2rem;
+            transition: all var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Glide Animation States */
+        body.is-focused header {
+            padding: 15px 40px;
+            text-align: left;
+        }
+
+        body.is-focused .header-content {
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 25px;
+        }
+
+        body.is-focused .logo-container img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 0;
+            border-width: 2px;
+        }
+
+        body.is-focused header h1 {
+            font-size: 1.6rem;
+            margin: 0;
+        }
+
+        body.is-focused header p {
+            font-size: 0.95rem;
+            opacity: 1;
+        }
+
+        /* --- MAIN UI --- */
         .main-content {
-            max-width: 500px;
-            margin: 20px auto;
+            max-width: 550px;
+            margin: -35px auto 50px;
             background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 110;
+            transition: margin-top var(--transition-speed) ease;
         }
 
-        .input-section { text-align: center; margin-bottom: 20px; }
+        body.is-focused .main-content {
+            margin-top: 40px;
+        }
+
+        .input-section { text-align: center; }
+
         input {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 16px;
+            padding: 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 18px;
+            box-sizing: border-box;
+            transition: all 0.3s;
             text-align: center;
-            margin-bottom: 15px;
+            font-family: inherit;
+        }
+
+        input:focus {
+            border-color: var(--primary-green);
+            outline: none;
+            box-shadow: 0 5px 15px rgba(11, 107, 58, 0.1);
         }
 
         .btn-search {
+            margin-top: 20px;
             width: 100%;
-            padding: 15px;
+            padding: 16px;
             background: var(--primary-green);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
+            font-size: 18px;
             font-weight: 600;
             cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
         }
 
-        .btn-print {
-            width: 100%;
-            padding: 15px;
-            background: #2c3e50;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            margin-top: 20px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+        .btn-search:active { transform: scale(0.98); }
 
-        /* --- RESULT CARD STYLING --- */
+        /* --- RESULTS --- */
+        #result { margin-top: 30px; }
+
         .result-card {
-            padding: 20px;
-            border: 1px solid #eee;
-            border-radius: 10px;
+            animation: slideUp 0.5s ease-out forwards;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .student-name {
             font-family: 'Amiri', serif;
             color: var(--primary-green);
-            font-size: 1.8rem;
+            font-size: 2rem;
             text-align: center;
-            margin-bottom: 5px;
+            margin: 0;
         }
 
         table {
             width: 100%;
+            margin: 25px 0;
             border-collapse: collapse;
-            margin: 20px 0;
         }
 
         th, td {
-            padding: 12px;
+            padding: 15px;
             text-align: left;
             border-bottom: 1px solid #eee;
         }
 
+        th { color: var(--primary-green); font-size: 0.9rem; letter-spacing: 1px; }
+
         .total-row {
+            background: #f8fcf9;
             font-weight: bold;
-            background: #f9f9f9;
             color: var(--primary-green);
+            font-size: 1.1rem;
         }
 
-        /* --- PRINT/PDF SPECIFIC STYLES --- */
+        .btn-print {
+            width: 100%;
+            padding: 16px;
+            background: var(--dark-text);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* --- PRINT LAYOUT --- */
         @media print {
-            @page {
-                size: A4;
-                margin: 2cm;
-            }
-            /* Hide everything except the Result Card */
-            header, .input-section, .btn-print, .btn-search, input {
-                display: none !important;
-            }
-            body { background: white; }
-            .main-content {
-                box-shadow: none;
-                margin: 0;
-                max-width: 100%;
-                padding: 0;
-            }
-            .result-card {
-                border: 2px solid var(--primary-green);
-                padding: 40px;
-            }
-            .print-only-header {
-                display: block !important;
+            header, .input-section, .btn-print { display: none !important; }
+            body { background: white !important; }
+            .main-content { box-shadow: none; margin: 0 !important; max-width: 100% !important; padding: 0 !important; }
+            
+            .print-header {
+                display: flex !important;
+                flex-direction: column;
+                align-items: center;
                 text-align: center;
-                margin-bottom: 30px;
-                border-bottom: 2px solid var(--gold-accent);
+                border-bottom: 3px double var(--gold-accent);
                 padding-bottom: 20px;
+                margin-bottom: 40px;
             }
-            .print-logo { width: 80px; margin-bottom: 10px; }
-            .footer-sig {
-                display: block !important;
+
+            .print-logo { width: 100px; height: 100px; margin-bottom: 10px; }
+            .print-title { font-family: 'Amiri', serif; font-size: 28pt; color: var(--primary-green); margin: 0; }
+            
+            .signature-area {
+                display: flex !important;
+                flex-direction: column;
+                align-items: flex-end;
                 margin-top: 60px;
-                text-align: center;
+                padding-right: 40px;
             }
-            .sig-line {
-                border-top: 1px solid black;
-                display: inline-block;
-                width: 250px;
+
+            .sig-image {
+                width: 180px;
+                height: auto;
+                margin-bottom: -10px;
+            }
+
+            .sig-text {
+                border-top: 1.5px solid #000;
+                width: 220px;
+                text-align: center;
                 padding-top: 5px;
                 font-weight: bold;
+                font-size: 12pt;
             }
         }
 
-        .print-only-header, .footer-sig { display: none; }
+        .print-header, .signature-area { display: none; }
+
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-container">
-            <img src="1000545194.webp" alt="Logo" onerror="this.src='https://via.placeholder.com/100'">
+    <header id="mainHeader">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="1000545194.webp" alt="Logo" onerror="this.src='https://via.placeholder.com/130'">
+            </div>
+            <div class="header-text">
+                <h1>Bayanul Uloom Suffa Dars</h1>
+                <p>Chemmankadav Kongayam</p>
+            </div>
         </div>
-        <h1>Bayanul Uloom Suffa Dars</h1>
-        <p>Examination Result Portal</p>
     </header>
 
     <div class="main-content">
         <div class="input-section">
-            <input type="text" id="regNo" placeholder="Enter Register Number">
-            <button class="btn-search" onclick="search()">Search Result</button>
+            <input type="text" id="regNo" placeholder="Enter Register Number" autocomplete="off">
+            <button class="btn-search" onclick="search()">View Marksheet</button>
         </div>
-        <div id="displayArea"></div>
+
+        <div id="result"></div>
     </div>
 
     <script>
@@ -218,44 +323,77 @@
             "3283":{name:"Muhammed Arshad",Noorulabsar:35,Meezan:35,SA:25,VIVA:30}
         };
 
-        function search() {
-            const id = document.getElementById("regNo").value;
-            const display = document.getElementById("displayArea");
-            const data = students[id];
+        const regInput = document.getElementById("regNo");
 
-            if (data) {
-                let rows = "";
+        // Glide Activation Logic
+        regInput.addEventListener('focus', () => {
+            document.body.classList.add('is-focused');
+        });
+
+        regInput.addEventListener('blur', () => {
+            if (regInput.value.trim() === "") {
+                document.body.classList.remove('is-focused');
+            }
+        });
+
+        regInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') search();
+        });
+
+        function search() {
+            const id = regInput.value.trim();
+            const resDiv = document.getElementById("result");
+            const s = students[id];
+
+            if (s) {
+                let rowsHtml = "";
                 let total = 0;
-                Object.keys(data).forEach(k => {
-                    if(k !== 'name') {
-                        rows += `<tr><td>${k.toUpperCase()}</td><td>${data[k]}</td></tr>`;
-                        total += data[k];
+                Object.keys(s).forEach(key => {
+                    if (key !== 'name') {
+                        rowsHtml += `<tr><td>${key.toUpperCase()}</td><td style="text-align:right;">${s[key]}</td></tr>`;
+                        total += Number(s[key]);
                     }
                 });
 
-                display.innerHTML = `
+                resDiv.innerHTML = `
                     <div class="result-card">
-                        <div class="print-only-header">
-                            <img src="1000545194.webp" class="print-logo" onerror="this.src='https://via.placeholder.com/80'">
-                            <div style="font-size: 22pt; font-family: Amiri; color: #0b6b3a;">Bayanul Uloom Suffa Dars</div>
-                            <div style="font-size: 12pt;">Chemmankadav Kongayam | Result 2026</div>
+                        <div class="print-header">
+                            <img src="1000545194.webp" class="print-logo" onerror="this.src='https://via.placeholder.com/100'">
+                            <div class="print-title">Bayanul Uloom Suffa Dars</div>
+                            <div style="font-size: 14pt;">Chemmankadav Kongayam | Result 2026</div>
                         </div>
-                        <h2 class="student-name">${data.name}</h2>
-                        <p style="text-align:center; margin:0; color:#666;">Reg No: ${id}</p>
+
+                        <h2 class="student-name">${s.name}</h2>
+                        <p style="text-align:center; color:#666; font-size:0.9rem;">Register No: ${id}</p>
+
                         <table>
-                            ${rows}
-                            <tr class="total-row"><td>GRAND TOTAL</td><td>${total}</td></tr>
+                            <thead>
+                                <tr><th>SUBJECT</th><th style="text-align:right;">MARKS</th></tr>
+                            </thead>
+                            <tbody>
+                                ${rowsHtml}
+                                <tr class="total-row">
+                                    <td>GRAND TOTAL</td>
+                                    <td style="text-align:right;">${total}</td>
+                                </tr>
+                            </tbody>
                         </table>
-                        <div class="footer-sig">
-                            <div class="sig-line">Principal Signature</div>
+
+                        <div class="signature-area">
+                            <img src="Sign01.png" class="sig-image" alt="Signature" onerror="this.style.display='none'">
+                            <div class="sig-text">Muhammed Saneer Faizy</div>
                         </div>
-                        <button class="btn-print" onclick="window.print()">Download Marksheet (PDF)</button>
+
+                        <button class="btn-print" onclick="window.print()">
+                            <span>🖨️</span> Print Official Marksheet
+                        </button>
                     </div>
                 `;
             } else {
-                display.innerHTML = "<p style='color:red; text-align:center;'>Student not found!</p>";
+                resDiv.innerHTML = `<p style="color:#e74c3c; text-align:center; font-weight:bold;">Register number not found.</p>`;
             }
         }
     </script>
 </body>
 </html>
+
